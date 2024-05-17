@@ -1,1 +1,210 @@
-<h1> Testing </h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Lovelock</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+
+    <link href="index.css" rel="stylesheet">
+
+</head>
+
+<body id="mainBody">
+    <video autoplay muted loop class="video-background">
+        <source src="Assets/Background.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid container-custom">
+            <a class="navbar-brand" href="#">Alex Lovelock</a>
+            <button class="navbar-toggler openbtn" type="button" onclick="toggleNav()">
+                ☰
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Resume</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Resume</a>
+    </div>
+
+    <div class="container-fluid container-custom main-container text-short-content">
+        <h1>Hey!</h1>
+        <h5 class="custom-font-size">I'm Alex, a student studying Computer Science at Surrey University,
+            graduating in 2024.
+            My primary interests lie in Web Development, Full Stack Development, and game development in UE5.</h5>
+    </div>
+
+    <div class="container-fluid container-custom main-container text-short-content">
+        <h2>What's Next for Me...</h2>
+        <h5 class="custom-font-size">As I approach graduation, I'm looking forward building my business creating
+            full-stack development projects. I also aim to enhance my skills in UE5 for game development, and exploring
+            new technologies in web development.</h5>
+    </div>
+
+    <div class="container-fluid container-custom main-container  text-content">
+        <h2>Portfolio</h2>
+        <h5 class="custom-font-size">Find some of my work below.</h5>
+
+        <form id="submit-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+
+
+
+    </div>
+    <script>
+
+        document.getElementById('submit-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            // Prepare the form data
+            var formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+
+            // Perform the fetch request
+            fetch('https://script.google.com/macros/s/AKfycbyi6PkKFuvX3MI78NUGLyQ9jWckCBQ5lVAwEGXOb-9nYqMOsP7UF3NgRnLnWvBwy608uw/exec', {
+                method: 'POST',
+                mode: 'no-cors', // This prevents the response from being readable due to CORS policy
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    // Since mode is 'no-cors', 'response' is type opaque, so we can't access status or data
+                    alert('Form successfully submitted');
+                })
+                .catch(error => {
+                    // Handle any errors that occurred during fetch
+                    alert('Error submitting form: ' + error.message);
+                });
+        });
+
+
+
+        function openNav() {
+            document.getElementById("mySidebar").style.left = "0";
+            document.getElementById("mainBody").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.left = "-250px";
+            document.getElementById("mainBody").style.marginLeft = "0";
+        }
+
+        function toggleNav() {
+            var sidebar = document.getElementById("mySidebar");
+            var body = document.getElementById("mainBody");
+
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "-250px";
+                body.style.marginLeft = "0";
+            } else {
+                sidebar.style.left = "0";
+                body.style.marginLeft = "250px";
+            }
+        }
+
+
+
+
+
+
+    </script>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
