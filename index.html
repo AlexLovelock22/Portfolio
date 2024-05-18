@@ -7,7 +7,7 @@
     <title>Alex Lovelock</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;500;600&display=swap">
     <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
 
     <link href="index.css" rel="stylesheet">
@@ -53,42 +53,59 @@
         <a href="#">Resume</a>
     </div>
 
-    <div class="container-fluid container-custom main-container text-short-content">
-        <h1>Hey!</h1>
-        <h5 class="custom-font-size">I'm Alex, a student studying Computer Science at Surrey University,
-            graduating in 2024.
-            My primary interests lie in Web Development, Full Stack Development, and game development in UE5.</h5>
-    </div>
+    <div class="container-fluid container-custom main-container">
+        <div class="row">
+            <div class="col-md-8 col-lg-9">
+                <div class="text-short-content">
+                    <h1>Hey!</h1>
+                    <h5 class="custom-font-size">I'm Alex, a student studying Computer Science at Surrey University,
+                        graduating in 2024. My primary interests lie in Web Development, Full Stack Development, and
+                        game development in UE5.</h5>
+                </div>
 
-    <div class="container-fluid container-custom main-container text-short-content">
-        <h2>What's Next for Me...</h2>
-        <h5 class="custom-font-size">As I approach graduation, I'm looking forward building my business creating
-            full-stack development projects. I also aim to enhance my skills in UE5 for game development, and exploring
-            new technologies in web development.</h5>
-    </div>
+                <div class="text-short-content">
+                    <h2>What's Next for Me...</h2>
+                    <h5 class="custom-font-size">As I approach graduation, I'm looking forward building my business
+                        creating
+                        full-stack development projects. I also aim to enhance my skills in UE5 for game development,
+                        and exploring
+                        new technologies in web development.</h5>
+                </div>
 
-    <div class="container-fluid container-custom main-container  text-content">
-        <h2>Portfolio</h2>
-        <h5 class="custom-font-size">Find some of my work below.</h5>
+                <div class="text-content">
+                    <h2>Portfolio</h2>
+                    <h5 class="custom-font-size">Find some of my work below.</h5>
+                </div>
+            </div>
 
-        <form id="submit-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-            <input type="hidden" id="email" name="email" value="kloakk2@gmail.com">
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-
-
-
-
+            <div class="col-md-4 col-lg-3">
+                <div class="form-container">
+                    <form id="submit-form">
+                        <p class="contact-me">Work with me</p>
+                        <label class="form-label" for="name">Email:</label>
+                        <input type="text" id="name" name="name" required>
+                        <input type="hidden" id="email" name="email" value="kloakk2@gmail.com">
+                        <label class="form-label" for="message">Message:</label>
+                        <textarea id="message" name="message" required></textarea>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
 
         document.getElementById('submit-form').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent the default form submission behavior
+
+            // Change button text and disable it
+            var submitButton = document.querySelector('button[type="submit"]');
+            submitButton.textContent = 'Email Sent';
+            submitButton.disabled = true;
+
+            // Clear the content of the input field and the textarea
+            document.getElementById('name').value = '';
+            document.getElementById('message').value = '';
 
             // Prepare the form data
             var formData = {
@@ -107,7 +124,13 @@
             })
                 .then(response => {
                     // Since mode is 'no-cors', 'response' is type opaque, so we can't access status or data
-                    alert('Form successfully submitted');
+
+
+
+                    setTimeout(function () {
+                        submitButton.textContent = 'Submit';
+                        submitButton.disabled = false;
+                    }, 1500);
                 })
                 .catch(error => {
                     // Handle any errors that occurred during fetch
