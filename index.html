@@ -103,10 +103,6 @@
             submitButton.textContent = 'Email Sent';
             submitButton.disabled = true;
 
-            // Clear the content of the input field and the textarea
-            document.getElementById('name').value = '';
-            document.getElementById('message').value = '';
-
             // Prepare the form data
             var formData = {
                 name: document.getElementById('name').value,
@@ -124,9 +120,6 @@
             })
                 .then(response => {
                     // Since mode is 'no-cors', 'response' is type opaque, so we can't access status or data
-
-
-
                     setTimeout(function () {
                         submitButton.textContent = 'Submit';
                         submitButton.disabled = false;
