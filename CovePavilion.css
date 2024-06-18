@@ -48,9 +48,16 @@ body {
     margin: 5px auto;
 }
 
+.title {
+    font-size: 2.5vw;
+    color: #000;
+
+}
+
 .nav-link {
     color: #000 !important;
     font-weight: 600 !important;
+    font-size:1.4vw;
     position: relative;
     display: inline-block;
 }
@@ -140,8 +147,125 @@ body {
 
 
 
+/* Ofsted */
+.ofsted-container {
+    background-color: #EEF6FF;
+    padding: 20px;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.ofsted-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center align items */
+    flex-wrap: wrap;
+    max-width: 87%;
+    margin: 0 auto;
+}
+
+.ofsted-text {
+    flex: 1;
+    padding: 0 10px; /* Reduce padding */
+    text-align: center;
+    padding-left: 5%; /* Adjust left padding */
+}
+
+.ofsted-text h2 {
+    font-size: 2vw;
+    color: #000;
+}
+
+.ofsted-text p {
+    font-size: 1.2vw;
+    color: #000;
+}
+
+.ofsted-text a {
+    font-size: 1.2vw;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.ofsted-text a:hover {
+    text-decoration: underline;
+}
+
+.ofsted-logo{
+    padding-right:5%;
+    height: 10vw; /* Adjust height as needed */
+    margin: 0 5px; /* Reduce margin */
+}
+
+.balloons {
+    height: 16vw; /* Adjust height as needed */
+    margin: 0 5px; /* Reduce margin */
+}
 
 
+/* Footer */
+.footer-container {
+    background-color: #EEF6FF;
+    text-align: center;
+
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Center align items */
+    flex-wrap: wrap;
+    margin: 0 auto;
+    background-color: #DEECFC;
+    padding-top:10px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.footer-details {
+    flex: 1;
+    text-align: left;
+}
+
+.footer-details h2 {
+    font-size: 1.5vw;
+    color: #000;
+}
+
+.footer-details p {
+    font-size: 1.2vw;
+    color: #000;
+}
+
+.footer-details a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer-details a:hover {
+    text-decoration: underline;
+}
+
+.footer-logos {
+    text-align: right;
+    color: #000;
+}
+
+.footer-logo {
+    height: 8vw; /* Adjust height as needed */
+    margin: 0 10px;
+}
+
+.footer-credits {
+    background-color: #EEF6FF;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.9vw;
+    color: #888;
+}
+
+
+/* Mobile View */
 @media (max-width: 991px) {
 
 
@@ -221,7 +345,20 @@ body {
         font-size:2.3vw;
     }
 
+    .ofsted-logo{
+        display:none;   
+      
+    }
 
+    .ofsted-text p {
+        font-size: 2.2vw;
+        color: #000;
+    }
+
+    .ofsted-text a {
+        font-size: 2.2vw;
+        color: #007bff;
+    }
 
 }
 
