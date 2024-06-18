@@ -1,0 +1,268 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    background: #EEF6FF;
+    transition: margin-left .5s;
+}
+
+.html {
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Navbar */
+.navbar-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px;
+    background: #DEECFC;
+    font-size: 1.6vh;
+    color: black;
+    font-weight: 600;
+}
+
+.navbar-center {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.navbar-center .nav-item {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.navbar-brand img,
+.navbar-right img {
+    height: 160px;
+}
+
+.navbar-right img {
+    margin-left: auto;
+}
+
+.navbar-center hr {
+    width: 80%;
+    margin: 5px auto;
+}
+
+.nav-link {
+    color: #000 !important;
+    font-weight: 600 !important;
+    position: relative;
+    display: inline-block;
+}
+
+/* Main Content */
+.main_content_container {
+    margin: 20px;
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-top: 2.5%;
+    background-color: #DEECFC;
+    padding: 20px;
+    text-align: left;
+    border-radius: 30px;
+}
+
+.main_content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main_content_text_container {
+    flex: 1;
+    max-width: 55%; /* Adjust text container width */
+}
+
+.main_content_title {
+    margin: 20px;
+    font-size: 1.7vw;
+    color:black;
+}
+
+.main_content_text {
+    margin: 20px;
+    font-size: 1.2vw;
+    color:black;
+
+}
+
+.main_content_carousel {
+    padding:20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 45%; /* Adjust carousel width */
+    height: auto;
+
+}
+
+.carousel-inner {
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-item {
+    height: auto;
+}
+
+.carousel-item img {
+    border-radius: 20px;
+    width: 100%;
+    height: auto; /* Changed from 100% to auto */
+    object-fit: cover;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    width: 100%; /* Ensure indicators are within image bounds */
+}
+
+.carousel-indicators li {
+    background-color: #fff;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+@media (max-width: 991px) {
+
+
+
+    .navbar-brand img,
+    .navbar-right img {
+        display: none;
+    }
+
+    .desktop-title {
+        display: none;
+    }
+
+    .navbar-center .title {
+        display: none;
+        /* Hide the original title in the dropdown */
+    }
+
+    .mobile-title {
+        display: block;
+        text-align: center;
+        width: 100%;
+        position: relative;
+        margin-top: 15px;
+        padding-bottom: 20px;
+        /* Added padding to the bottom */
+    }
+
+    .mobile-title .title {
+        text-align: center;
+    }
+
+    .mobile-title hr {
+        width: 80%;
+        margin: 5px auto;
+    }
+
+    .navbar-toggler {
+        position: absolute;
+        vertical-align: center;
+        right: 15px;
+        top: 15px;
+    }
+
+    .navbar-collapse {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-toggler {
+        color: #000;
+        /* Ensure the icon color is black */
+        border-color: #000;
+        /* Change the border color */
+    }
+
+    .carousel {
+        display:none;
+    }
+
+    .main_content_text_container {
+        max-width: 100%;
+    }
+
+    .main_content_title {
+        font-size:3vw;
+    }
+
+
+    .main_content_text {
+        font-size:2.3vw;
+    }
+
+
+
+}
+
+@media (min-width: 992px) {
+    .mobile-title {
+        display: none;
+    }
+
+    .navbar-collapse {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+    }
+
+    .navbar-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar-center .title {
+        display: block;
+        /* Ensure the original title is displayed on larger screens */
+        text-align: center;
+    }
+
+    .navbar-center hr {
+        width: 50%;
+        /* Adjusted width for desktop view */
+        margin: 5px auto;
+    }
+
+    .navbar-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0 15px;
+    }
+}
