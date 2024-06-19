@@ -20,7 +20,7 @@ body {
     padding: 0 15px;
     background: #DEECFC;
     font-size: 1.6vh;
-    color: black;
+    color: #555;
     font-weight: 600;
 }
 
@@ -49,7 +49,7 @@ body {
 }
 
 .title {
-    font-size: 2.5vw;
+    font-size: 1.7vw;
     color: #000;
 
 }
@@ -57,7 +57,7 @@ body {
 .nav-link {
     color: #000 !important;
     font-weight: 600 !important;
-    font-size:1.4vw;
+    font-size: 1vw;
     position: relative;
     display: inline-block;
 }
@@ -81,29 +81,31 @@ body {
 
 .main_content_text_container {
     flex: 1;
-    max-width: 55%; /* Adjust text container width */
+    max-width: 55%;
+    /* Adjust text container width */
 }
 
 .main_content_title {
     margin: 20px;
     font-size: 1.7vw;
-    color:black;
+    color: #555;
 }
 
 .main_content_text {
     margin: 20px;
     font-size: 1.2vw;
-    color:black;
+    color: #555;
 
 }
 
 .main_content_carousel {
-    padding:20px;
+    padding: 20px;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 45%; /* Adjust carousel width */
+    max-width: 45%;
+    /* Adjust carousel width */
     height: auto;
 
 }
@@ -120,7 +122,8 @@ body {
 .carousel-item img {
     border-radius: 20px;
     width: 100%;
-    height: auto; /* Changed from 100% to auto */
+    height: auto;
+    /* Changed from 100% to auto */
     object-fit: cover;
 }
 
@@ -132,7 +135,8 @@ body {
     display: flex;
     justify-content: center;
     margin: 0;
-    width: 100%; /* Ensure indicators are within image bounds */
+    width: 100%;
+    /* Ensure indicators are within image bounds */
 }
 
 .carousel-indicators li {
@@ -158,7 +162,8 @@ body {
 .ofsted-content {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center align items */
+    justify-content: center;
+    /* Center align items */
     flex-wrap: wrap;
     max-width: 87%;
     margin: 0 auto;
@@ -166,13 +171,15 @@ body {
 
 .ofsted-text {
     flex: 1;
-    padding: 0 10px; /* Reduce padding */
+    padding: 0 10px;
+    /* Reduce padding */
     text-align: center;
-    padding-left: 5%; /* Adjust left padding */
+    padding-left: 5%;
+    /* Adjust left padding */
 }
 
 .ofsted-text h2 {
-    font-size: 2vw;
+    font-size: 1.2vw;
     color: #000;
 }
 
@@ -191,16 +198,98 @@ body {
     text-decoration: underline;
 }
 
-.ofsted-logo{
-    padding-right:5%;
-    height: 10vw; /* Adjust height as needed */
-    margin: 0 5px; /* Reduce margin */
+.ofsted-logo {
+    padding-right: 5%;
+    height: 10vw;
+    /* Adjust height as needed */
+    margin: 0 5px;
+    /* Reduce margin */
 }
 
 .balloons {
-    height: 16vw; /* Adjust height as needed */
-    margin: 0 5px; /* Reduce margin */
+    height: 16vw;
+    /* Adjust height as needed */
+    margin: 0 5px;
+    /* Reduce margin */
 }
+
+
+
+/* Parallax Section */
+.parallax {
+    background-image: url('https://i.imgur.com/XDqo52X.jpg');
+    /* Replace with your image URL */
+    height: 10vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: -1;
+}
+
+.event-content-container {
+    max-width: 50%;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #DEECFC;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.event-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.event-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 400px;
+    /* Adjust height as needed */
+    padding: 0 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.event {
+    background: #fff;
+    font-size: 1vw;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+.event h3 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.event p {
+    font-size: 1em;
+    color: #555;
+}
+
+.event-title {
+    font-size: 2vh;
+    color: #555;
+}
+
+
+
+
+
+
 
 
 /* Footer */
@@ -213,13 +302,14 @@ body {
 .footer-content {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Center align items */
+    justify-content: space-between;
+    /* Center align items */
     flex-wrap: wrap;
     margin: 0 auto;
     background-color: #DEECFC;
-    padding-top:10px;
-    padding-left:10px;
-    padding-right:10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .footer-details {
@@ -252,7 +342,8 @@ body {
 }
 
 .footer-logo {
-    height: 8vw; /* Adjust height as needed */
+    height: 4vw;
+    /* Adjust height as needed */
     margin: 0 10px;
 }
 
@@ -266,9 +357,8 @@ body {
 
 
 /* Mobile View */
+/* WHEN BELOW 991px */
 @media (max-width: 991px) {
-
-
 
     .navbar-brand img,
     .navbar-right img {
@@ -329,7 +419,7 @@ body {
     }
 
     .carousel {
-        display:none;
+        display: none;
     }
 
     .main_content_text_container {
@@ -337,18 +427,24 @@ body {
     }
 
     .main_content_title {
-        font-size:3vw;
+        font-size: 3vw;
     }
 
 
     .main_content_text {
-        font-size:2.3vw;
+        font-size: 2.3vw;
     }
 
-    .ofsted-logo{
-        display:none;   
-      
+    .ofsted-logo {
+        display: none;
+
     }
+
+    .ofsted-text h2 {
+        font-size: 2.2vw;
+        color: #000;
+    }
+
 
     .ofsted-text p {
         font-size: 2.2vw;
@@ -359,6 +455,133 @@ body {
         font-size: 2.2vw;
         color: #007bff;
     }
+
+
+
+    .event-content-container {
+        max-width: 90%;
+        margin: 0 auto;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        padding: 20px;
+        border-radius: 15px;
+        background: #DEECFC;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .event-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+    }
+
+    .event-container {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: 400px;
+        /* Adjust height as needed */
+        padding: 0 5px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .event {
+        background: #fff;
+        font-size: 1vh;
+        padding: 20px;
+        margin: 10px 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: calc(100% - 20px);
+        box-sizing: border-box;
+    }
+
+    .event h3 {
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .event p {
+        font-size: 1em;
+        color: #555;
+    }
+
+    .event-title {
+        font-size: 2vh;
+        color: #555;
+    }
+
+
+
+    /* Footer */
+    .footer-container {
+        background-color: #EEF6FF;
+        text-align: center;
+
+    }
+
+    .footer-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* Center align items */
+        flex-wrap: wrap;
+        margin: 0 auto;
+        background-color: #DEECFC;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .footer-details {
+        flex: 1;
+        text-align: left;
+    }
+
+    .footer-details h2 {
+        font-size: 1.5vh;
+        color: #555;
+    }
+
+    .footer-details p {
+        font-size: 1.2vh;
+        color: #555;
+    }
+
+    .footer-details a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .footer-details a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-logos {
+        flex-direction: column; /* Stack logos vertically on mobile */
+        text-align: center; /* Center align text on mobile */
+    }
+
+    .footer-logo {
+        margin: 10px 0; /* Margin between stacked logos */
+        height: 10vw; /* Adjust height for mobile view */
+    }
+
+    .footer-credits {
+        background-color: #EEF6FF;
+        padding-top: 10px;
+        text-align: left;
+        font-size: 0.9vh;
+        color: #888;
+    }
+
+
+
+
 
 }
 
