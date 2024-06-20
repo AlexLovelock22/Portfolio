@@ -5,14 +5,26 @@ body {
     color: #fff;
     background: #EEF6FF;
     transition: margin-left .5s;
+    scroll-behavior: smooth !important;
 }
 
 .html {
     font-family: 'Nunito', sans-serif;
+    scroll-behavior: smooth !important;
 }
 
+html, body { 
+    scroll-behavior: smooth !important;
+  }
+
 /* Navbar */
+.navbar {
+    position: sticky;
+
+}
+
 .navbar-custom {
+    position: sticky;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,6 +42,7 @@ body {
 }
 
 .navbar-center .nav-item {
+    position: sticky;
     display: inline-block;
     margin: 0 10px;
 }
@@ -64,9 +77,10 @@ body {
 
 /* Main Content */
 .main_content_container {
+    overflow: hidden !important;
     margin: 20px;
-    margin-left: 7%;
-    margin-right: 7%;
+    margin-left: 14%;
+    margin-right: 14%;
     margin-top: 2.5%;
     background-color: #DEECFC;
     padding: 20px;
@@ -86,13 +100,14 @@ body {
 }
 
 .main_content_title {
-    margin: 20px;
+    margin-left: 20px;
     font-size: 1.7vw;
     color: #555;
 }
 
 .main_content_text {
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     font-size: 1.2vw;
     color: #555;
 
@@ -104,19 +119,22 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 45%;
-    /* Adjust carousel width */
-    height: auto;
-
+    align-items: center; /* Center carousel content horizontally */
+    max-width: 45%; /* Adjust carousel width */
+    height: 100%; /* Ensure it takes the full height of its container */
 }
 
 .carousel-inner {
     height: 100%;
     width: 100%;
+    align-items: center; /* Center carousel content vertically */
+    justify-content: center;
 }
 
 .carousel-item {
     height: auto;
+    align-items: center; /* Center carousel content vertically */
+    justify-content: center;
 }
 
 .carousel-item img {
@@ -148,11 +166,51 @@ body {
     cursor: pointer;
 }
 
+/* Hide mobile view by default */
+.aims-mobile-view {
+    display: none;
+}
 
+.aims-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    margin-top: 0vh;
+    background-color: #EEF6FF;
+    border-radius: 30px;
+}
+
+.aims_subtitle {
+    font-size: 2.5vh;
+    color: #555;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom:10px;
+}
+
+.aims-column {
+    flex: 1;
+    margin: 10px;
+
+}
+
+.aims-column ul {
+    list-style-type: disc; /* Add bullet points */
+    padding-left: 2vw; /* Add some padding to the left to offset the bullet points */
+    
+}
+
+.aims-column ul li {
+    
+    padding: 3px 0;
+    font-size: 1vw;
+    color: #555;
+}
 
 
 /* Ofsted */
 .ofsted-container {
+    padding-top:50px;
     background-color: #EEF6FF;
     padding: 20px;
     border-radius: 30px;
@@ -160,12 +218,15 @@ body {
 }
 
 .ofsted-content {
+    padding-top:3vh;
+    padding-bottom:3vh;
+
     display: flex;
     align-items: center;
     justify-content: center;
     /* Center align items */
     flex-wrap: wrap;
-    max-width: 87%;
+    max-width: 77%;
     margin: 0 auto;
 }
 
@@ -200,7 +261,7 @@ body {
 
 .ofsted-logo {
     padding-right: 5%;
-    height: 10vw;
+    height: 8vw;
     /* Adjust height as needed */
     margin: 0 5px;
     /* Reduce margin */
@@ -219,7 +280,7 @@ body {
 .parallax {
     background-image: url('https://i.imgur.com/XDqo52X.jpg');
     /* Replace with your image URL */
-    height: 10vh;
+    height: 40vh;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -360,6 +421,35 @@ body {
 /* WHEN BELOW 991px */
 @media (max-width: 991px) {
 
+
+    /* Navbar */
+    .navbar-custom {
+        position: -webkit-sticky;
+        /* For Safari */
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        /* Ensure it is above other content */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 15px;
+        background: #DEECFC;
+        font-size: 1.6vh;
+        color: #555;
+        font-weight: 600;
+    }
+
+    .nav-link{
+        color: #000 !important;
+        font-weight: 600 !important;
+        font-size: 1.2vh;
+        position: relative;
+        display: inline-block;
+    }
+
+
     .navbar-brand img,
     .navbar-right img {
         display: none;
@@ -415,7 +505,12 @@ body {
         color: #000;
         /* Ensure the icon color is black */
         border-color: #000;
-        /* Change the border color */
+        /* Change the border color */ 
+    }
+
+    .main_content_container{
+        margin-left: 4%;
+        margin-right:4%
     }
 
     .carousel {
@@ -426,13 +521,27 @@ body {
         max-width: 100%;
     }
 
+    .main_content_text_container hr {
+        margin:0;
+    }
+
     .main_content_title {
         font-size: 3vw;
+    }
+
+    .main_content_container {
+        padding:1vh;
+        padding-left:0.4vh;
+        padding-right:0.4vh;
     }
 
 
     .main_content_text {
         font-size: 2.3vw;
+    }
+
+    .ofsted-content{
+        max-width: 94%;
     }
 
     .ofsted-logo {
@@ -456,6 +565,111 @@ body {
         color: #007bff;
     }
 
+    .aims-desktop-view {
+        display: none;
+    }
+    /* Show mobile view on mobile */
+    .aims-desktop-view {
+        display: none;
+    }
+
+    /* Show mobile view on mobile */
+    .aims-mobile-view {
+        display: block;
+    }
+
+    .slider-container {
+        
+        margin-left:1.3vw;
+        margin-right:1.3vw;
+        overflow: hidden;
+        position: relative;
+        margin-top: 0.1vh;
+    }
+
+    .slider {
+        display: flex;
+        flex-direction: column;
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+    }
+
+    .slider-nav {
+        display: flex;
+        justify-content: space-around;
+        background: #EEF6FF;
+        border-radius: 30px 30px 0 0;
+        overflow: hidden;
+    }
+
+    .slider-label {
+        flex: 1;
+        text-align: center;
+        padding: 10px 0;
+        cursor: pointer;
+        font-size: 1.5vh;
+        color: #555;
+        border: 1px solid #ddd;
+        border-top-left-radius: 30px 0 0 30px; /* Left button rounded corners */
+    }
+    
+    .slider-label + .slider-label {
+        border-top-right-radius: 0 30px 30px 0; /* Right button rounded corners */
+        border-left: none; /* Remove the left border for the right button */
+    }
+    
+    .slider-label:active {
+        background-color: #c5d9f5; /* Change background color on active */
+        box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add inset shadow on active */
+    }
+
+    .slider-content {
+        color: #555;
+        display: flex;
+        transition: transform 0.3s ease;
+    }
+
+    .slider-item {
+        min-width: 100%;
+        box-sizing: border-box;
+        background: #EEF6FF;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 0 0 30px 30px;
+    }
+
+    .slider-item li {
+        font-size:1vh;
+    }
+
+    .slider-item ul {
+        padding-left:3vw;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    #our-setting:checked ~ .slider-container .slider-content {
+        transform: translateX(0%);
+    }
+
+    #your-family:checked ~ .slider-container .slider-content {
+        transform: translateX(-100%);
+    }
+
+    .parallax {
+        background-image: url('https://i.imgur.com/XDqo52X.jpg');
+        /* Replace with your image URL */
+        height: 20vh;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        z-index: -1;
+    }
 
 
     .event-content-container {
@@ -562,13 +776,17 @@ body {
     }
 
     .footer-logos {
-        flex-direction: column; /* Stack logos vertically on mobile */
-        text-align: center; /* Center align text on mobile */
+        flex-direction: column;
+        /* Stack logos vertically on mobile */
+        text-align: center;
+        /* Center align text on mobile */
     }
 
     .footer-logo {
-        margin: 10px 0; /* Margin between stacked logos */
-        height: 10vw; /* Adjust height for mobile view */
+        margin: 10px 0;
+        /* Margin between stacked logos */
+        height: 10vw;
+        /* Adjust height for mobile view */
     }
 
     .footer-credits {

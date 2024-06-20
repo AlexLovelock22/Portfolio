@@ -23,3 +23,14 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error fetching events:', error));
 });
+
+
+function toggleContent(id) {
+    var content = document.getElementById(id);
+    if (content.style.display === "block") {
+        content.style.display = "none";
+    } else {
+        content.style.display = "block";
+    }
+}
+
