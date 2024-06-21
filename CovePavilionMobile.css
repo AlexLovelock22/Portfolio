@@ -276,7 +276,7 @@
     }
 
     .slider-item li {
-        font-size: 1vh;
+        font-size: 2vw;
     }
 
     .slider-item ul {
@@ -365,6 +365,25 @@
         color: #555;
     }
 
+
+
+    .map-content {
+        flex-direction: column-reverse;
+    }
+
+    .map-text {
+        padding-top:3vh;
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 20px; /* Add some space below the text */
+        order: 1;
+    }
+
+    .map-iframe {
+        width: 100%;
+        height: 40vh; /* Adjust height for mobile view */
+        order: 2;
+    }
 
 
     /* Footer */
