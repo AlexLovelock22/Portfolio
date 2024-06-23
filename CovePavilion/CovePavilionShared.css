@@ -1,0 +1,103 @@
+/* Navbar */
+.navbar {
+    position: sticky;
+
+}
+
+.navbar-custom {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px;
+    background: #DEECFC;
+    font-size: 1.6vh;
+    color: #555;
+    font-weight: 600;
+}
+
+
+.navbar-center {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.navbar-center .nav-item {
+    position: sticky;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.navbar-brand img,
+.navbar-right img {
+    height: 7vw;
+}
+
+.navbar-right img {
+    margin-left: auto;
+}
+
+.navbar-center hr {
+    width: 80%;
+    margin: 5px auto;
+}
+
+.title {
+    font-size: 1.7vw;
+    color: #000;
+
+}
+
+.nav-link {
+    color: #000 !important;
+    font-weight: 600 !important;
+    font-size: 1vw;
+    position: relative;
+    display: inline-block;
+}
+
+
+.cover-image {
+    width: 100%;
+    height: 50vmin; /* Adjust this value to take up less vertical height */
+    background-image: url('https://i.imgur.com/dOjHtFW.jpg');
+    background-size: cover; /* Ensures the image covers the entire div without stretching */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    position: relative; /* Set relative position to contain the overlay */
+    display: flex;
+    align-items: center; /* Vertically centers the child element */
+    justify-content: left; /* Horizontally centers the child element */
+    background-attachment: fixed;
+
+    
+}
+
+.cover-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3); /* Light white overlay with opacity */
+    z-index: 1; /* Places the overlay behind the content */
+}
+
+.image_content_container {
+
+    overflow: hidden !important;
+    max-width: 100%;
+    margin-left: 13.5vw;
+    margin-right: 13.5vw;
+    margin-top:2vh;
+    margin-bottom: 2vh;
+    padding: 20px;
+    text-align: left;
+    border-radius: 30px;
+    background-color: #DEECFC;
+    position: relative;
+    z-index: 2; /* Places the content above the overlay */
+    
+}
