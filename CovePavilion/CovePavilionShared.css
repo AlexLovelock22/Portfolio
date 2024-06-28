@@ -57,6 +57,53 @@
     display: inline-block;
 }
 
+.title-image {
+    height:50vmin;
+    min-height: 300px;
+    width: 100%;
+    background-image: url('https://i.imgur.com/dOjHtFW.jpg');
+    background-size: cover; /* Ensures the image covers the entire div without stretching */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    position: relative; /* Set relative position to contain the overlay */
+    display: flex;
+    align-items: center; /* Vertically centers the child element */
+    justify-content: center; /* Horizontally centers the child element */
+    margin-bottom:3vh;
+
+}
+
+.title-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3); /* Light white overlay with opacity */
+    z-index: 1; /* Places the overlay behind the content */
+}
+
+.title-image::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;  /* Position the wave slightly below the image */
+    left: 0;
+    width: 100%;
+    height: 50px;  /* Increased height for a larger wave */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'><path d='M0,10 Q50,0 100,10 T200,10 V20 H0 Z' fill='%23EEF6FF'/></svg>");
+    background-repeat: repeat-x;
+}
+
+.page-title {
+    font-family: "Bubblegum Sans", sans-serif;
+    text-align: center;
+    color:#003366 ;
+    font-size:12vmin;
+}
+
+
+
 
 .cover-image {
     width: 100%;
@@ -99,3 +146,6 @@
     z-index: 2; /* Places the content above the overlay */
     
 }
+
+
+
