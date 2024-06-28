@@ -10,7 +10,6 @@
     display: flex;
     align-items: center; /* Vertically centers the child element */
     justify-content: center; /* Horizontally centers the child element */
-    margin-bottom:3vh;
 
 }
 
@@ -43,27 +42,42 @@
     font-size:12vmin;
 }
 
-.team-member {
+
+.contact-us {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 80%;
+    background-color: #DCEAFA;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 0 auto; /* Center the div */
+    margin-top:6vh;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+    margin-bottom:4vh;
+}
+
+.map-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.map-iframe {
+    border-radius: 20px;
+    width: 60%;
+    height: 50vh;
+    border: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-text {
+    
+    width: 35%;
+    margin-left: 20px;
     text-align: center;
-    padding: 20px;  /* Provides padding around each item */
+    font-size: 1.2vw;
+    color: #555;
 }
-
-.col-lg-4.col-md-6 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.team-member img {
-    border-radius: 50%;
-    width: auto; /* Adjust as needed */
-    height: 20vmin; /* Adjust as needed */
-    min-height:20vmin;
-    min-width:auto;
-}
-

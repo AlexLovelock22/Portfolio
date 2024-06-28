@@ -43,27 +43,30 @@
     font-size:12vmin;
 }
 
-.team-member {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;  /* Provides padding around each item */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns based on your preference */
+    gap: 10px; /* Spacing between images */
+    padding: 20px; /* Padding around the grid */
 }
 
-.col-lg-4.col-md-6 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.photo {
+    background-size: cover;
+    background-position: center;
+    aspect-ratio: 1 / 1; /* Default to square unless specified */
 }
 
-.team-member img {
-    border-radius: 50%;
-    width: auto; /* Adjust as needed */
-    height: 20vmin; /* Adjust as needed */
-    min-height:20vmin;
-    min-width:auto;
+.photo.large {
+    grid-column: span 2;
+    grid-row: span 2;
 }
 
+.photo.wide {
+    grid-column: span 2;
+    aspect-ratio: 2 / 1; /* Twice as wide as it is tall */
+}
+
+.photo.tall {
+    grid-row: span 2;
+    aspect-ratio: 1 / 2; /* Twice as tall as it is wide */
+}

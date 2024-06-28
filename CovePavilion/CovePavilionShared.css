@@ -66,12 +66,10 @@
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents tiling */
     position: relative; /* Set relative position to contain the overlay */
-    display: flex;
+    display: flex; 
     align-items: center; /* Vertically centers the child element */
     justify-content: left; /* Horizontally centers the child element */
     background-attachment: fixed;
-
-    
 }
 
 .cover-image::before {

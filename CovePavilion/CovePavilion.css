@@ -17,6 +17,58 @@ html, body {
     scroll-behavior: smooth !important;
 }
 
+.title-image {
+    height:50vmin;
+    min-height: 300px;
+    width: 100%;
+    background-image: url('https://i.imgur.com/dOjHtFW.jpg');
+    background-size: cover; /* Ensures the image covers the entire div without stretching */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    position: relative; /* Set relative position to contain the overlay */
+    display: flex;
+    align-items: center; /* Vertically centers the child element */
+    justify-content: center; /* Horizontally centers the child element */
+    margin-bottom:3vh;
+
+}
+
+.title-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3); /* Light white overlay with opacity */
+    z-index: 1; /* Places the overlay behind the content */
+}
+
+.title-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%; /* Adjust this value to change the height of the shadow */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent); /* Creates the shadow effect */
+    z-index: 2; /* Places the shadow above the overlay */
+}
+
+.page-title {
+    font-family: "Bubblegum Sans", sans-serif;
+    text-align: center;
+    color:#003366 ;
+    font-size:10vmin;
+}
+
+.foreground-image {
+    height: auto; /* Maintain the image’s aspect ratio */
+    width: 40vmin; /* Adjust width according to your design */
+    margin-right: 20px; /* Space between the image and the text */
+    z-index: 3; /* Ensure the image appears above the overlays */
+    padding-left:4vw;
+}
 
 
 
@@ -304,42 +356,7 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 } */
 
-.contact-us {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    background-color: #DCEAFA;
-    border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 0 auto; /* Center the div */
-    box-sizing: border-box; /* Ensure padding is included in the width */
-    margin-bottom:4vh;
-}
 
-.map-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.map-iframe {
-    width: 60%;
-    height: 50vh;
-    border: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.map-text {
-    
-    width: 35%;
-    margin-left: 20px;
-    text-align: center;
-    font-size: 1.2vw;
-    color: #555;
-}
 
 
 

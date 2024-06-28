@@ -122,6 +122,10 @@
         /* Places the overlay behind the content */
     }
 
+    .foreground-image {
+        display: none;
+    }
+
     .image_content_container {
         overflow: hidden !important;
         margin: 20px;
@@ -129,8 +133,8 @@
         margin-top: 3vh;
         background-color: #DEECFC;
         padding: 0px;
-        padding-top:1vh;
-        padding-bottom:1vh;
+        padding-top: 1vh;
+        padding-bottom: 1vh;
         text-align: left;
         border-radius: 30px;
         max-width: 90%;
@@ -373,10 +377,12 @@
         background-color: transparent;
         border-radius: 30px;
         box-shadow: none;
-        margin: 0 auto; /* Center the div */
-        box-sizing: border-box; /* Ensure padding is included in the width */
-        margin-bottom:4vh;
-    }    
+        margin: 0 auto;
+        /* Center the div */
+        box-sizing: border-box;
+        /* Ensure padding is included in the width */
+        margin-bottom: 4vh;
+    }
 
 
     .map-content {
@@ -384,24 +390,26 @@
     }
 
     .map-text {
-        padding-top:3vh;
+        padding-top: 3vh;
         width: 100%;
         margin-left: 0;
-        margin-bottom: 20px; /* Add some space below the text */
+        margin-bottom: 20px;
+        /* Add some space below the text */
         order: 1;
     }
 
-    .map-text p{
-        padding-top:3vh;
-        font-size:1.4vh;
-        padding:0;
-        margin:0;
+    .map-text p {
+        padding-top: 3vh;
+        font-size: 1.4vh;
+        padding: 0;
+        margin: 0;
     }
 
     .map-iframe {
         box-shadow: none;
         width: 100%;
-        height: 40vh; /* Adjust height for mobile view */
+        height: 40vh;
+        /* Adjust height for mobile view */
         order: 2;
     }
 
