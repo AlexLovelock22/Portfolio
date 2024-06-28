@@ -34,3 +34,15 @@ function toggleContent(id) {
     }
 }
 
+window.addEventListener('load', () => {
+    const images = document.querySelectorAll('.gallery img');
+    images.forEach(img => {
+        if (img.naturalHeight > img.naturalWidth) {
+            img.classList.add('portrait');
+        } else {
+            img.classList.add('landscape');
+        }
+    });
+});
+
+
