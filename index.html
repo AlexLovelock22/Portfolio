@@ -4,222 +4,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Lovelock</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;500;600&display=swap">
-    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-
-    <link href="index.css" rel="stylesheet">
+    <title>Alex Lovelock | Software Developer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Portfolio.css">
+    <script src="Portfolio.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
 
 </head>
 
-<body id="mainBody">
-    <video autoplay muted loop class="video-background">
-        <source src="Assets/Background.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="overlay"></div>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid container-custom">
-            <a class="navbar-brand" href="#">Alex Lovelock</a>
-            <button class="navbar-toggler openbtn" type="button" onclick="toggleNav()">
-                ☰
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Resume</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-        <a href="#">Resume</a>
+<body class="bg-gray-900">
+    <div class="background">
+        <canvas id="canvas"></canvas>
     </div>
-
-    <div class="container-fluid container-custom main-container">
-        <div class="row">
-            <div class="col-md-8 col-lg-9">
-                <div class="text-short-content">
-                    <h1>Hey!</h1>
-                    <h5 class="custom-font-size">I'm Alex, a student studying Computer Science at Surrey University,
-                        graduating in 2024. My primary interests lie in Web Development, Full Stack Development, and
-                        game development in UE5.</h5>
+    <div class="container mx-auto max-w-6xl py-10 flex px-6" style="padding-top:8vh;">
+        <aside class="w-5/12 pr-8" style="position:fixed; z-index:0; padding-top:8vh;">
+            <div>
+                <div class="mb-10">
+                    <h1 class="text-5xl font-bold text-slate-200 mb-4">Alex Lovelock</h1>
+                    <h2 class="text-xl text-slate-200 mb-2">Software Developer</h2>
                 </div>
-
-                <div class="text-short-content">
-                    <h2>What's Next for Me...</h2>
-                    <h5 class="custom-font-size">As I approach graduation, I'm looking forward building my business
-                        creating
-                        full-stack development projects. I also aim to enhance my skills in UE5 for game development,
-                        and exploring
-                        new technologies in web development.</h5>
-                </div>
-
-                <div class="text-content">
-                    <h2>Portfolio</h2>
-                    <h5 class="custom-font-size">Find some of my work below.</h5>
-                </div>
+                <nav>
+                    <ul class="space-y-2">
+                        <li class="menu-item"><a href="#about">ABOUT</a></li>
+                        <li class="menu-item"><a href="#personalProjects">PERSONAL PROJECTS</a></li>
+                        <li class="menu-item"><a href="#skillsAndTechnologies">SKILLS & TECHNOLOGIES</a></li>
+                    </ul>
+                </nav>
             </div>
-
-            <div class="col-md-4 col-lg-3">
-                <div class="form-container">
-                    <form id="submit-form">
-                        <p class="contact-me">Work with me</p>
-                        <label class="form-label" for="name">Email:</label>
-                        <input type="text" id="name" name="name" required>
-                        <input type="hidden" id="email" name="email" value="kloakk2@gmail.com">
-                        <label class="form-label" for="message">Message:</label>
-                        <textarea id="message" name="message" required></textarea>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
+            <div class="contact-icons mt-8">
+                <a class="block hover:text-slate-200 icon-link" href="mailto:alexlovelock164@gmail.com" 
+                    target="_blank" rel="noreferrer noopener" aria-label="Email me"
+                    title="Email">
+                    <span class="sr-only">Email</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="h-6 w-6" aria-hidden="true">
+                        <path
+                            d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z" />
+                    </svg>
+                </a>
+                <a class="block hover:text-slate-200 icon-link" href="https://www.linkedin.com/in/AlexLovelock"
+                    target="_blank" rel="noreferrer noopener" aria-label="LinkedIn (opens in a new tab)"
+                    title="LinkedIn">
+                    <span class="sr-only">LinkedIn</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"
+                        aria-hidden="true">
+                        <path
+                            d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z">
+                        </path>
+                    </svg>
+                </a>
+                <a class="block hover:text-slate-200 " href="https://github.com/Alexlovelock22" target="_blank"
+                    rel="noreferrer noopener" aria-label="GitHub (opens in a new tab)" title="GitHub">
+                    <span class="sr-only">GitHub</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-6 w-6"
+                        aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                </a>
             </div>
-        </div>
+        </aside>
+        <main class="w-7/12 ml-auto" style="z-index:10;">
+            <section id="about">
+                <header class="mb-10" id="about">
+                    <h3 class="text-lg text-gray-300 mb-2 font-semibold">About</h3>
+                    <div class="about-container">
+                        <p class="text-gray-400 mt-2">
+                            I recently graduated from Surrey University, taught at University Centre Farnborough with a
+                            1st
+                            class degree in Computing.
+                            During my studies, I developed a passion for software development, focusing on areas like
+                            web development, game development, and project management. I am eager to
+                            apply my skills and knowledge in real-world projects and am actively seeking opportunities
+                            in
+                            software development where I can contribute and continue learning, whilst working on
+                            personal
+                            projects in my free time.
+                        </p>
+                        <br>
+                        <p class="text-gray-400 mt-2">
+                            I have been interested in software development for many years now, and have been developing
+                            software since I was 16. I have developed a variety of projects, from small games to web
+                            applications.
+                        </p>
+
+                    </div>
+                </header>
+            </section>
+            <section id="personalProjects" class="mb-10">
+                <h3 class="text-lg text-gray-300 mb-2 font-semibold">Personal Projects</h3>
+                <div class="space-y-6">
+                    <div class="project-container mb-8">
+                        <h4 class="font-semibold">University Media Inventory and Rental System</h4>
+                        <p class="text-gray-400">
+                            For my final year project, I developed a web-based inventory and rental system
+                            for Farnborough College of Technology. The system uses role base access utlising identity
+                            framework and GraphAPI.
+                            Students are able to rent equipment with approval from lecturers who manage the rentals and
+                            inventory. It is closely
+                            integrated with the colleges systems for a seamless user experience.
+                        </p>
+                        <div class="relative mb-8 pt-4">
+                            <div class="carousel overflow-hidden">
+                                <div class="carousel-inner flex transition-transform duration-500 ease-in-out">
+                                    <div class="carousel-item w-full flex justify-center">
+                                        <img src="PortfolioAssets/CourseIndexDesktop.png" alt="Desktop Screenshot 1"
+                                            class="w-auto max-h-80 rounded-lg shadow-lg">
+                                    </div>
+                                    <div class="carousel-item w-full flex justify-center">
+                                        <img src="PortfolioAssets/EquipmentCatalogueDesktop.png"
+                                            alt="Desktop Screenshot 2" class="w-auto max-h-80 rounded-lg shadow-lg">
+                                    </div>
+                                    <div class="carousel-item w-full flex justify-center">
+                                        <div class="flex space-x-4">
+                                            <img src="PortfolioAssets/CourseIndexMobile.png" alt="Mobile Screenshot 1"
+                                                class="w-1/2 max-h-80 rounded-lg shadow-lg">
+                                            <img src="PortfolioAssets/EquipmentCatalogueMobile.png"
+                                                alt="Mobile Screenshot 2" class="w-1/2 max-h-80 rounded-lg shadow-lg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Indicators -->
+                            <div class="flex justify-center mt-4">
+                                <span class="indicator-dot w-3 h-3 bg-gray-400 rounded-full mx-1 cursor-pointer"
+                                    onclick="moveToSlide(0)"></span>
+                                <span class="indicator-dot w-3 h-3 bg-gray-400 rounded-full mx-1 cursor-pointer"
+                                    onclick="moveToSlide(1)"></span>
+                                <span class="indicator-dot w-3 h-3 bg-gray-400 rounded-full mx-1 cursor-pointer"
+                                    onclick="moveToSlide(2)"></span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap mt-2 space-x-2">
+                            <span class="tag">C#</span>
+                            <span class="tag">RazorPages</span>
+                            <span class="tag">.NET Framework</span>
+                            <span class="tag">SQL Server</span>
+                            <span class="tag">DevOps Continuous Integration</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="project-container">
+                        <h4 class="font-semibold">VoxelOne</h4>
+                        <p class="text-gray-400">
+                            VoxelOne is a voxel-based game similar to Minecraft I developed in Godot using GDScript
+                            I started developing after leaving University. It is still in the works, but I have
+                            learnt a lot about dynamic mesh generation, procedural generation, multi-threading, and
+                            more.
+                        </p>
+                        <div class="flex flex-wrap mt-2 space-x-2">
+                            <span class="tag">GDScript</span>
+                            <span class="tag">Game Development</span>
+                            <span class="tag">Multithreading</span>
+                            <span class="tag">Procedural Generation</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skillsAndTechnologies" class="mb-10">
+                <h3 class="text-lg text-gray-300 mb-2 font-semibold">Skills & Technologies</h3>
+                <p class="text-gray-400 mt-2 mb-4">
+                    I have previously used the following technologies in various projects and have a solid understanding
+                    of their foundational principles and practical usage.
+                </p>
+                <div class="skillsTechnologiesContainer">
+
+                    <div class="tech-item" data-tooltip="Bootstrap">
+                        <img src="PortfolioAssets/bootstrap.png" alt="Bootstrap" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip="Figma">
+                        <img src="PortfolioAssets/figma.png" alt="Figma" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip="Godot">
+                        <img src="PortfolioAssets/godot.png" alt="Godot" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip=".NET Framework">
+                        <img src="PortfolioAssets/social.png" alt=".NET" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip="SQL and SQLite">
+                        <img src="PortfolioAssets/SQL.png" alt="SQL" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip="HTML">
+                        <img src="PortfolioAssets/html-5.png" alt="HTML" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip="CSS">
+                        <img src="PortfolioAssets/css-3.png" alt="CSS" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip="JS">
+                        <img src="PortfolioAssets/js.png" alt="JS" class="tech-image">
+                    </div>
+                    <div class="tech-item" data-tooltip="NodeJS">
+                        <img src="PortfolioAssets/nodejs.png" alt="NodeJS" class="tech-image">
+                    </div>
+
+
+                </div>
+            </section>
+
+
+
+
+        </main>
     </div>
-    <script>
-
-        document.getElementById('submit-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission behavior
-
-            // Change button text and disable it
-            var submitButton = document.querySelector('button[type="submit"]');
-            submitButton.textContent = 'Email Sent';
-            submitButton.disabled = true;
-
-            // Prepare the form data
-            var formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                message: document.getElementById('message').value
-            };
-
-            // Perform the fetch request
-            fetch('https://script.google.com/macros/s/AKfycbwNS2_EyccbvD9f86wRWS036XPJb768S2NoDr4xnJAffn1_pGpstIqKMKWpdtv7l444mA/exec', {
-                method: 'POST',
-                mode: 'no-cors', // This prevents the response from being readable due to CORS policy
-                redirect: 'follow',
-                referrerPolicy: 'no-referrer',
-                body: JSON.stringify(formData)
-            })
-                .then(response => {
-                    // Since mode is 'no-cors', 'response' is type opaque, so we can't access status or data
-                    setTimeout(function () {
-                        submitButton.textContent = 'Submit';
-                        submitButton.disabled = false;
-                    }, 1500);
-                })
-                .catch(error => {
-                    // Handle any errors that occurred during fetch
-                    alert('Error submitting form: ' + error.message);
-                });
-        });
-
-
-
-        function openNav() {
-            document.getElementById("mySidebar").style.left = "0";
-            document.getElementById("mainBody").style.marginLeft = "250px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidebar").style.left = "-250px";
-            document.getElementById("mainBody").style.marginLeft = "0";
-        }
-
-        function toggleNav() {
-            var sidebar = document.getElementById("mySidebar");
-            var body = document.getElementById("mainBody");
-
-            if (sidebar.style.left === "0px") {
-                sidebar.style.left = "-250px";
-                body.style.marginLeft = "0";
-            } else {
-                sidebar.style.left = "0";
-                body.style.marginLeft = "250px";
-            }
-        }
-
-
-
-
-
-
-    </script>
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br> <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
