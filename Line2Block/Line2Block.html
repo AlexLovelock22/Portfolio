@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line2Block | Alex Lovelock</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="Line2Block.css">
+</head>
+<body class="flex flex-col items-center justify-center h-screen bg-gray-800">
+    <h1 class="text-3xl font-medium text-center text-white">Line2Block: Convert Your Designs to Minecraft Blocks</h1>
+    <div class="toolbar">
+        <input type="checkbox" id="drawCurvedLineCheckbox" checked>
+        <label for="drawCurvedLineCheckbox">Draw Curved Line</label>
+        <input type="checkbox" id="blockThicknessCheckbox">
+        <label for="blockThicknessCheckbox">Block Thickness</label>
+        <input type="range" id="curveStrengthSlider" min="0" max="100" value="0">
+        <label for="curveStrengthSlider" id="curveStrengthLabel">Curve Strength: 0</label>
+    </div>
+    <div> <canvas id="pixelCanvas" class="mb-10" width="512" height="512"></canvas></div>
+    <script src="Line2Block.js"></script>
+
+
+
+
+    <div>
+        <img id="fullBlockTexture" src="BlockTextures/FullBlock.png" alt="Full Block" class="flex mb-2">
+        <img id="slabTopTexture" src="BlockTextures/TopSlab.png" alt="Slab Top" class="flex mb-2">
+        <img id="slabBottomTexture" src="BlockTextures/BottomSlab.png" alt="Slab Bottom" class="flex mb-2">
+        <img id="stairNorthTexture" src="BlockTextures/Stairs1.png" alt="Stair North" class="flex mb-2">
+        <img id="stairEastTexture" src="BlockTextures/Stairs2.png" alt="Stair East" class="flex mb-2">
+        <img id="stairSouthTexture" src="BlockTextures/Stairs3.png" alt="Stair South" class="flex mb-2">
+        <img id="stairWestTexture" src="BlockTextures/Stairs4.png" alt="Stair West" class="flex mb-2">
+    </div>
+</body>
+</html>

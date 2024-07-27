@@ -1,0 +1,41 @@
+body,
+html {
+    height: auto;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    font-family: "Poppins", sans-serif;
+    background-color: #4B5067;
+}
+canvas {
+    border: 1px solid #ecf0f1;
+    margin-top: 20px;
+}
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.toolbar button, .toolbar input {
+   
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ecf0f1;
+}
+.toolbar button.active {
+    background-color: #3498db;
+    color: white;
+}
+.toolbar button:hover {
+    background-color: #2980b9;
+    color: white;
+}
+.toolbar button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+.toolbar input[type="range"] {
+    width: 200px; /* Increased from 100px to 200px */
+}
