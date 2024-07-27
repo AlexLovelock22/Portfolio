@@ -16,19 +16,19 @@ const textures = {
     full: new Image(),
     slabTop: new Image(),
     slabBottom: new Image(),
-    stairNorth: new Image(),
-    stairEast: new Image(),
-    stairSouth: new Image(),
-    stairWest: new Image()
+    stair1: new Image(), // Stair going up right
+    stair2: new Image(), // Stair going up left
+    stair3: new Image(), // Stair going up down
+    stair4: new Image()  // Stair going up up
 };
 
 textures.full.src = 'BlockTextures/FullBlock.png';
 textures.slabTop.src = 'BlockTextures/TopSlab.png';
 textures.slabBottom.src = 'BlockTextures/BottomSlab.png';
-textures.stairNorth.src = 'BlockTextures/Stairs1.png';
-textures.stairEast.src = 'BlockTextures/Stairs2.png';
-textures.stairSouth.src = 'BlockTextures/Stairs3.png';
-textures.stairWest.src = 'BlockTextures/Stairs4.png';
+textures.stair1.src = 'BlockTextures/Stairs1.png';
+textures.stair2.src = 'BlockTextures/Stairs2.png';
+textures.stair3.src = 'BlockTextures/Stairs3.png';
+textures.stair4.src = 'BlockTextures/Stairs4.png';
 
 // Ensure all textures are loaded before starting
 let loadedTextures = 0;
@@ -67,37 +67,50 @@ function determineBlockType(p1, p2) {
 
     console.log(`Determining block type with slope: ${slope}, coverage: ${coverage}`);
 
-    // Adjusted coverage thresholds
-    if (coverage > 0.4) {  // Higher threshold for full blocks
+    if (coverage > 0.8) {
         return 'full';
-    } else if (coverage > 0.3) {  // Adjusted slab and stair threshold
-        return slope > 0.4 ? 'stair' : 'slab';
-    } else if (coverage > 0.2) {
-        return 'slab';
+    } else if (coverage > 0.25) {
+        if (slope > 2.0) { // Use stairs for very steep slopes
+            return 'stair';
+        } else {
+            // Use slabs based on the y-position within the cell
+            return (p1.y % 1 > 0.5 || p2.y % 1 > 0.5) ? 'slabTop' : 'slabBottom';
+        }
+    } else if (coverage > 0.1) {
+        if (slope > 2.0) { // Apply the same logic for less coverage
+            return 'stair';
+        } else {
+            return (p1.y % 1 > 0.5 || p2.y % 1 > 0.5) ? 'slabTop' : 'slabBottom';
+        }
     } else {
         return 'none';
     }
 }
 
-
 // Draw the block on the canvas
-function drawBlock(x, y, blockType, orientation = '', debug = false) {
-    if (debug) {
-        // Draw debug grid cell overlay
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.3)'; // Semi-transparent red
-        ctx.fillRect(x * (displayedWidth / gridSize), y * (displayedHeight / gridSize), displayedWidth / gridSize, displayedHeight / gridSize);
-    }
-
+function drawBlock(x, y, blockType) {
     let texture;
     switch (blockType) {
         case 'full':
             texture = textures.full;
             break;
-        case 'slab':
-            texture = (y % 1 === 0) ? textures.slabBottom : textures.slabTop;
+        case 'slabTop':
+            texture = textures.slabTop;
             break;
-        case 'stair':
-            texture = textures[`stair${orientation}`];
+        case 'slabBottom':
+            texture = textures.slabBottom;
+            break;
+        case 'stair1':
+            texture = textures.stair1;
+            break;
+        case 'stair2':
+            texture = textures.stair2;
+            break;
+        case 'stair3':
+            texture = textures.stair3;
+            break;
+        case 'stair4':
+            texture = textures.stair4;
             break;
         default:
             return;
@@ -108,68 +121,93 @@ function drawBlock(x, y, blockType, orientation = '', debug = false) {
     }
 }
 
-// Determine the orientation for stairs
-function determineOrientation(p1, p2) {
+// Determine the stair block type based on the movement direction
+function determineStairBlockType(p1, p2) {
     const dx = p2.x - p1.x;
     const dy = p2.y - p1.y;
+
     if (Math.abs(dx) > Math.abs(dy)) {
-        return dx > 0 ? 'East' : 'West';
+        return dx > 0 ? 'stair1' : 'stair2'; // Horizontal movement
     } else {
-        return dy > 0 ? 'South' : 'North';
+        return dy > 0 ? 'stair4' : 'stair3'; // Vertical movement
     }
 }
 
-// Analyze and draw blocks using a quadratic Bézier curve
 function analyzeAndDrawBlocks() {
     if (selectedPoints.length === 3) {
         let [p1, p2, cp] = selectedPoints;
 
         let steps = 100; // Number of steps to approximate the curve
         ctx.beginPath();
-        ctx.moveTo(p1.x * (displayedWidth / gridSize), p1.y * (displayedHeight / gridSize));
+
+        // Store all points used for both block placement and debug line drawing
+        let curvePoints = [];
 
         for (let step = 0; step <= steps; step++) {
             let t = step / steps;
-
+        
             // Quadratic Bezier Curve formula
             let x = (1 - t) * (1 - t) * p1.x + 2 * (1 - t) * t * cp.x + t * t * p2.x;
             let y = (1 - t) * (1 - t) * p1.y + 2 * (1 - t) * t * cp.y + t * t * p2.y;
 
-            let gridX = Math.floor(x);
-            let gridY = Math.floor(y);
-
-            // Center the curve within the grid cells
-            let centerX = gridX + 0.5;
-            let centerY = gridY + 0.5;
-
-            // Draw the debug line
-            ctx.lineTo(centerX * (displayedWidth / gridSize), centerY * (displayedHeight / gridSize));
-
-            // Determine the block type for this segment
+            curvePoints.push({ x, y });
+        
+            // Use rounding instead of flooring
+            let gridX = Math.round(x);
+            let gridY = Math.round(y);
+        
             let nextT = Math.min(1, t + 1 / steps);
             let nextX = (1 - nextT) * (1 - nextT) * p1.x + 2 * (1 - nextT) * nextT * cp.x + nextT * nextT * p2.x;
             let nextY = (1 - nextT) * (1 - nextT) * p1.y + 2 * (1 - nextT) * nextT * cp.y + nextT * nextT * p2.y;
-
-            let blockType = determineBlockType({x: centerX, y: centerY}, {x: nextX, y: nextY});
-            
-            console.log(`Step ${step}: x=${centerX}, y=${centerY}, gridX=${gridX}, gridY=${gridY}, blockType=${blockType}`);
-
+        
+            let blockType = determineBlockType({x: x, y: y}, {x: nextX, y: nextY});
+        
+            console.log(`Step ${step}: x=${x}, y=${y}, gridX=${gridX}, gridY=${gridY}, blockType=${blockType}`);
+        
             if (blockType === 'stair') {
-                let orientation = determineOrientation({x: x, y: y}, {x: nextX, y: nextY});
-                drawBlock(gridX, gridY, blockType, orientation);
+                blockType = determineStairBlockType({x: x, y: y}, {x: nextX, y: nextY});
+                drawBlock(gridX, gridY, blockType);
             } else if (blockType !== 'none') {
                 drawBlock(gridX, gridY, blockType);
             }
+
+            // Check additional cells to make the line 20% wider
+            const offsets = [
+                { dx: 0.2, dy: 0 }, { dx: -0.2, dy: 0 }, // 20% offset horizontally
+                { dx: 0, dy: 0.2 }, { dx: 0, dy: -0.2 }  // 20% offset vertically
+            ];
+
+            offsets.forEach(offset => {
+                let adjustedX = x + offset.dx;
+                let adjustedY = y + offset.dy;
+                let adjustedGridX = Math.round(adjustedX);
+                let adjustedGridY = Math.round(adjustedY);
+                let adjustedBlockType = determineBlockType({x: adjustedX, y: adjustedY}, {x: nextX + offset.dx, y: nextY + offset.dy});
+        
+                console.log(`Adjusted Step ${step}: x=${adjustedX}, y=${adjustedY}, gridX=${adjustedGridX}, gridY=${adjustedGridY}, blockType=${adjustedBlockType}`);
+        
+                if (adjustedBlockType === 'stair') {
+                    adjustedBlockType = determineStairBlockType({x: adjustedX, y: adjustedY}, {x: nextX + offset.dx, y: nextY + offset.dy});
+                    drawBlock(adjustedGridX, adjustedGridY, adjustedBlockType);
+                } else if (adjustedBlockType !== 'none') {
+                    drawBlock(adjustedGridX, adjustedGridY, adjustedBlockType);
+                }
+            });
         }
 
+        // Draw the debug line after the blocks and points to ensure it is on top
+        ctx.beginPath();
+        ctx.moveTo((curvePoints[0].x + 0.5) * (displayedWidth / gridSize), (curvePoints[0].y + 0.5) * (displayedHeight / gridSize));
+        for (let i = 1; i < curvePoints.length; i++) {
+            ctx.lineTo((curvePoints[i].x + 0.5) * (displayedWidth / gridSize), (curvePoints[i].y + 0.5) * (displayedHeight / gridSize));
+        }
         ctx.strokeStyle = 'blue';
         ctx.lineWidth = 2;
         ctx.stroke();
+
+        drawAllPoints();
     }
-    drawAllPoints();
 }
-
-
 
 function drawAllPoints() {
     selectedPoints.forEach(point => {
@@ -177,7 +215,7 @@ function drawAllPoints() {
     });
 }
 
-function drawPixel(x, y, color = '#3498db') {
+function drawPixel(x, y, color = 'red') {
     ctx.fillStyle = color;
     ctx.fillRect(x * (displayedWidth / gridSize), y * (displayedHeight / gridSize), displayedWidth / gridSize, displayedHeight / gridSize);
 }
@@ -222,10 +260,22 @@ canvas.addEventListener('mousemove', (event) => {
         const newGridY = Math.floor(draggingPoint.y);
         
         if (newGridX !== oldGridX || newGridY !== oldGridY) {
-            redrawCanvas();
+            requestRedraw();
         }
     }
 });
+
+let isDrawing = false;
+
+function requestRedraw() {
+    if (!isDrawing) {
+        isDrawing = true;
+        requestAnimationFrame(() => {
+            redrawCanvas();
+            isDrawing = false;
+        });
+    }
+}
 
 canvas.addEventListener('mouseup', () => {
     draggingPoint = null;
