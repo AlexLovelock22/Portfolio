@@ -22,7 +22,7 @@
         <canvas id="canvas"></canvas>
     </div>
     <div class="container mx-auto max-w-6xl py-10 flex px-6" style="padding-top:8vh;">
-        <aside class="w-5/12 pr-8" style="position:fixed; z-index:0; padding-top:8vh;">
+        <aside class="w-5/12 pr-8 hidden lg:block" style="position: fixed; z-index: 0; padding-top: 8vh;">
             <div>
                 <div class="mb-10">
                     <h1 class="text-5xl font-bold text-slate-200 mb-4">Alex Lovelock</h1>
@@ -69,7 +69,13 @@
                 </a>
             </div>
         </aside>
-        <main class="w-7/12 ml-auto" style="z-index:10;">
+
+        
+        <main class="w-full lg:w-7/12 ml-auto" style="z-index:10;">
+            <div class="lg:hidden text-left mb-5 bg-gray-900">
+                <h1 class="text-5xl font-bold text-white">Alex Lovelock</h1>
+                <p class="text-white">Software Developer</p>
+            </div>
             <section id="about">
                 <header class="mb-10" id="about">
                     <h3 class="text-lg text-gray-300 mb-2 font-semibold">About</h3>
