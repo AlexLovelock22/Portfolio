@@ -9,7 +9,7 @@ canvas.width = displayedWidth;
 canvas.height = displayedHeight;
 
 let isCurvedLine = true;
-let selectedPoints = [{ x: 5, y: 15 }, { x: 25, y: 15 }, { x: 16, y: 5 }];
+let selectedPoints = [{ x: 0, y: 0 }, { x: 31, y: 0 }, { x: 15, y: 31 }];
 let draggingPoint = null;
 
 const textures = {
@@ -71,11 +71,11 @@ function determineBlockType(p1, p2) {
     // Determine block type based on coverage and slope
     if (coverage > 0.8) {
         return 'full';
-    } else if (slope > 2.0) { // Use a threshold greater than 2.0 for stairs
+    } else if (slope > 1.7) { // Use a threshold greater than 2.0 for stairs
         return 'stair';
     } else if (coverage > 0.1) {
         // Determine slab type based on p1.y and p2.y
-        return (p1.y % 1 > 0.5 || p2.y % 1 > 0.9) ? 'slabTop' : 'slabBottom';
+        return (p1.y % 1 > 0.5 || p2.y % 1 > 0.95) ? 'slabTop' : 'slabBottom';
     } else {
         return 'none';
     }
@@ -167,8 +167,8 @@ function analyzeAndDrawBlocks() {
 
             // Check additional cells to make the line 20% wider
             const offsets = [
-                { dx: 0.2, dy: 0 }, { dx: -0.2, dy: 0 }, // 20% offset horizontally
-                { dx: 0, dy: 0.2 }, { dx: 0, dy: -0.2 }  // 20% offset vertically
+                { dx: 0.2, dy: 0.2 }, { dx: -0.2, dy: 0.2 }, // 20% offset horizontally
+                { dx: 0.2, dy: 0.2 }, { dx: 0.2, dy: -0.2 }  // 20% offset vertically
             ];
 
             offsets.forEach(offset => {
