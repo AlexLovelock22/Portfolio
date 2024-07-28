@@ -9,7 +9,7 @@ canvas.width = displayedWidth;
 canvas.height = displayedHeight;
 
 let isCurvedLine = true;
-let selectedPoints = [{ x: 5, y: 15 }, { x: 25, y: 15 }, { x: 15, y: 5 }];
+let selectedPoints = [{ x: 5, y: 15 }, { x: 25, y: 15 }, { x: 16, y: 5 }];
 let draggingPoint = null;
 
 const textures = {
@@ -68,21 +68,14 @@ function determineBlockType(p1, p2) {
 
     console.log(`Determining block type with slope: ${slope}, coverage: ${coverage}`);
 
+    // Determine block type based on coverage and slope
     if (coverage > 0.8) {
         return 'full';
-    } else if (coverage > 0.25) {
-        if (slope > 1.5) { // Adjusted threshold for steep slopes
-            return 'stair';
-        } else {
-            // Use slabs based on the y-position within the cell
-            return (p1.y % 1 > 0.5 || p2.y % 1 > 0.5) ? 'slabTop' : 'slabBottom';
-        }
+    } else if (slope > 2.0) { // Use a threshold greater than 2.0 for stairs
+        return 'stair';
     } else if (coverage > 0.1) {
-        if (slope > 1.5) { // Adjusted threshold for less coverage
-            return 'stair';
-        } else {
-            return (p1.y % 1 > 0.5 || p2.y % 1 > 0.9) ? 'slabTop' : 'slabBottom';
-        }
+        // Determine slab type based on p1.y and p2.y
+        return (p1.y % 1 > 0.5 || p2.y % 1 > 0.9) ? 'slabTop' : 'slabBottom';
     } else {
         return 'none';
     }
