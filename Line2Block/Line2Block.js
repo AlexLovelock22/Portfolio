@@ -49,6 +49,7 @@ for (const key in textures) {
 }
 
 // Calculate the coverage of a line segment within a cell
+// Calculate the coverage of a line segment within a cell
 function calculateCoverage(p1, p2) {
     const dx = Math.abs(p2.x - p1.x);
     const dy = Math.abs(p2.y - p1.y);
@@ -63,24 +64,24 @@ function determineBlockType(p1, p2) {
     let maxDistance = Math.sqrt(2); // Max diagonal of the cell
     let coverage = distance / maxDistance;
 
-    let slope = Math.abs(dy / dx);
+    let slope = dx !== 0 ? Math.abs(dy / dx) : Infinity;
 
     console.log(`Determining block type with slope: ${slope}, coverage: ${coverage}`);
 
     if (coverage > 0.8) {
         return 'full';
     } else if (coverage > 0.25) {
-        if (slope > 2.0) { // Use stairs for very steep slopes
+        if (slope > 1.5) { // Adjusted threshold for steep slopes
             return 'stair';
         } else {
             // Use slabs based on the y-position within the cell
             return (p1.y % 1 > 0.5 || p2.y % 1 > 0.5) ? 'slabTop' : 'slabBottom';
         }
     } else if (coverage > 0.1) {
-        if (slope > 2.0) { // Apply the same logic for less coverage
+        if (slope > 1.5) { // Adjusted threshold for less coverage
             return 'stair';
         } else {
-            return (p1.y % 1 > 0.5 || p2.y % 1 > 0.5) ? 'slabTop' : 'slabBottom';
+            return (p1.y % 1 > 0.5 || p2.y % 1 > 0.9) ? 'slabTop' : 'slabBottom';
         }
     } else {
         return 'none';
@@ -145,27 +146,27 @@ function analyzeAndDrawBlocks() {
 
         for (let step = 0; step <= steps; step++) {
             let t = step / steps;
-        
+
             // Quadratic Bezier Curve formula
             let x = (1 - t) * (1 - t) * p1.x + 2 * (1 - t) * t * cp.x + t * t * p2.x;
             let y = (1 - t) * (1 - t) * p1.y + 2 * (1 - t) * t * cp.y + t * t * p2.y;
 
             curvePoints.push({ x, y });
-        
+
             // Use rounding instead of flooring
             let gridX = Math.round(x);
             let gridY = Math.round(y);
-        
+
             let nextT = Math.min(1, t + 1 / steps);
             let nextX = (1 - nextT) * (1 - nextT) * p1.x + 2 * (1 - nextT) * nextT * cp.x + nextT * nextT * p2.x;
             let nextY = (1 - nextT) * (1 - nextT) * p1.y + 2 * (1 - nextT) * nextT * cp.y + nextT * nextT * p2.y;
-        
-            let blockType = determineBlockType({x: x, y: y}, {x: nextX, y: nextY});
-        
+
+            let blockType = determineBlockType({ x: x, y: y }, { x: nextX, y: nextY });
+
             console.log(`Step ${step}: x=${x}, y=${y}, gridX=${gridX}, gridY=${gridY}, blockType=${blockType}`);
-        
+
             if (blockType === 'stair') {
-                blockType = determineStairBlockType({x: x, y: y}, {x: nextX, y: nextY});
+                blockType = determineStairBlockType({ x: x, y: y }, { x: nextX, y: nextY });
                 drawBlock(gridX, gridY, blockType);
             } else if (blockType !== 'none') {
                 drawBlock(gridX, gridY, blockType);
@@ -182,12 +183,12 @@ function analyzeAndDrawBlocks() {
                 let adjustedY = y + offset.dy;
                 let adjustedGridX = Math.round(adjustedX);
                 let adjustedGridY = Math.round(adjustedY);
-                let adjustedBlockType = determineBlockType({x: adjustedX, y: adjustedY}, {x: nextX + offset.dx, y: nextY + offset.dy});
-        
+                let adjustedBlockType = determineBlockType({ x: adjustedX, y: adjustedY }, { x: nextX + offset.dx, y: nextY + offset.dy });
+
                 console.log(`Adjusted Step ${step}: x=${adjustedX}, y=${adjustedY}, gridX=${adjustedGridX}, gridY=${adjustedGridY}, blockType=${adjustedBlockType}`);
-        
+
                 if (adjustedBlockType === 'stair') {
-                    adjustedBlockType = determineStairBlockType({x: adjustedX, y: adjustedY}, {x: nextX + offset.dx, y: nextY + offset.dy});
+                    adjustedBlockType = determineStairBlockType({ x: adjustedX, y: adjustedY }, { x: nextX + offset.dx, y: nextY + offset.dy });
                     drawBlock(adjustedGridX, adjustedGridY, adjustedBlockType);
                 } else if (adjustedBlockType !== 'none') {
                     drawBlock(adjustedGridX, adjustedGridY, adjustedBlockType);
@@ -258,7 +259,7 @@ canvas.addEventListener('mousemove', (event) => {
         draggingPoint.y = pos.y;
         const newGridX = Math.floor(draggingPoint.x);
         const newGridY = Math.floor(draggingPoint.y);
-        
+
         if (newGridX !== oldGridX || newGridY !== oldGridY) {
             requestRedraw();
         }
