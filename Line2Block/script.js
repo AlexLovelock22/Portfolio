@@ -176,25 +176,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function markAndLogIntersectedCells(p1X, p1Y, p2X, p2Y, dx, dy) {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
         drawGrid(); // Redraw the grid
-    
+
         console.clear(); // Clear previous logs
-    
-        // Shade the area between lines and the cells
-        ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; // Light blue shade
-        ctx.beginPath();
-        ctx.moveTo(p1X - dx, p1Y + dy);
-        ctx.lineTo(p2X - dx, p2Y + dy);
-        ctx.lineTo(p2X + dx, p2Y - dy);
-        ctx.lineTo(p1X + dx, p1Y - dy);
-        ctx.closePath();
-        ctx.fill();
-    
+
         // Bounding box of the shaded area
         const minX = Math.min(p1X - dx, p2X - dx, p1X + dx, p2X + dx);
         const maxX = Math.max(p1X - dx, p2X - dx, p1X + dx, p2X + dx);
         const minY = Math.min(p1Y + dy, p2Y + dy, p1Y - dy, p2Y - dy);
         const maxY = Math.max(p1Y + dy, p2Y + dy, p1Y - dy, p2Y - dy);
-    
+
+        const cellTypes = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+
+        // Initial pass to determine cell types
         for (let x = 0; x < gridSize; x++) {
             for (let y = 0; y < gridSize; y++) {
                 // Define the corners of the current cell
@@ -203,61 +196,107 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cellBottomLeft = { x: x * cellSize, y: (y + 1) * cellSize };
                 const cellBottomRight = { x: (x + 1) * cellSize, y: (y + 1) * cellSize };
                 const cellCenter = { x: (cellTopLeft.x + cellBottomRight.x) / 2, y: (cellTopLeft.y + cellBottomRight.y) / 2 };
-    
+
                 // Check if the cell is within the bounding box of the shaded area
                 if (cellTopLeft.x > maxX || cellBottomRight.x < minX || cellTopLeft.y > maxY || cellBottomRight.y < minY) {
                     continue; // Skip cells outside the bounding box
                 }
-    
+
                 // Calculate the y-value of the line at the cell's x-coordinate
                 const lineY = p1Y + ((cellCenter.x - p1X) * (p2Y - p1Y)) / (p2X - p1X);
                 const isAboveCentralLine = cellCenter.y < lineY;
-    
+
                 // Calculate the x-value of the line at the cell's y-coordinate
                 const lineX = p1X + ((cellCenter.y - p1Y) * (p2X - p1X)) / (p2Y - p1Y);
                 const isLeftOfLine = cellCenter.x < lineX;
-    
+
                 // Calculate coverage percentage and gradient
                 const coveragePercentage = calculateCoveragePercentage(
                     [cellTopLeft, cellTopRight, cellBottomRight, cellBottomLeft],
                     [{ x: p1X - dx, y: p1Y + dy }, { x: p2X - dx, y: p2Y + dy }, { x: p2X + dx, y: p2Y - dy }, { x: p1X + dx, y: p1Y - dy }]
                 );
                 const gradient = Math.abs(p2Y - p1Y) / Math.abs(p2X - p1X);
-    
+
                 let imageToDraw = null;
-    
+                let cellType = 'other';
+
                 // Set fill color and image based on position relative to the line
                 if (coveragePercentage > 0) {
+                    console.log(`Checking cell (${x}, ${y}): Coverage ${coveragePercentage.toFixed(2)}%, Gradient ${gradient.toFixed(2)}`);
                     if (gradient <= 0.9 && coveragePercentage <= 20) {
                         // Choose images for slabs
                         imageToDraw = isAboveCentralLine ? bottomSlab : topSlab;
-                        ctx.fillStyle = isAboveCentralLine ? 'rgba(255, 10, 0, 0)' : 'rgba(255, 165, 0, 0)';
-                    } else if (gradient > 0.5 && coveragePercentage <= 20) {
+                        cellType = 'slab';
+                        console.log(`Checking cell (${x}, ${y}): Placing Slab.`);
+                    } else if (gradient > 0.4 && gradient >= 0.5 && coveragePercentage <= 20) {
                         // Choose images for stairs based on quadrants
                         if (isAboveCentralLine) {
                             imageToDraw = isLeftOfLine ? stairs1 : stairs2;
-                            ctx.fillStyle = isLeftOfLine ? 'rgba(211, 211, 211, 0)' : 'rgba(105, 105, 105, 0)';
+                            cellType = 'stairs';
+                            console.log(`Checking cell (${x}, ${y}): Placing Stairs (Upper quadrant).`);
                         } else {
                             imageToDraw = isLeftOfLine ? stairs3 : stairs4;
-                            ctx.fillStyle = isLeftOfLine ? 'rgba(238, 130, 238, 0)' : 'rgba(148, 0, 211, 0)';
+                            cellType = 'stairs';
+                            console.log(`Checking cell (${x}, ${y}): Placing Stairs (Lower quadrant).`);
                         }
                     } else {
-                        imageToDraw = full
-                        ctx.fillStyle = 'rgba(0, 255, 0, 0)'; // Light green shade for other coverage
+                        imageToDraw = full;
+                        cellType = 'block';
+                        console.log(`Checking cell (${x}, ${y}): Placing Full Block.`);
                     }
-    
+
+                    // Store the cell type for conversion check later
+                    cellTypes[x][y] = cellType;
+
                     // Draw the chosen image
                     if (imageToDraw) {
                         ctx.drawImage(imageToDraw, x * cellSize, y * cellSize, cellSize, cellSize);
+                        console.log(`Drawing image at (${x}, ${y})`);
                     }
-                    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize); // Debugging color overlay
                 }
-    
+
                 // Log the grid coordinates, coverage percentage, and position relative to the line
                 console.log(`Affected Cell: (${x}, ${y}) Coverage %: ${coveragePercentage.toFixed(2)}, Gradient: ${gradient.toFixed(2)}, Above Central Line: ${isAboveCentralLine}, Left of Line: ${isLeftOfLine}`);
             }
         }
+
+        // Second pass to check and convert stairs to blocks if necessary
+        for (let x = 0; x < gridSize; x++) {
+            for (let y = 0; y < gridSize; y++) {
+                if (cellTypes[x][y] === 'stairs') {
+                    console.log(`Checking adjacent cells for cell (${x}, ${y}) to determine if conversion to block is needed.`);
+                    let adjacentBlocksCount = 0;
+
+                    // Check orthogonally adjacent cells only
+                    const adjacentCoords = [
+                        [x - 1, y], [x + 1, y], // left, right
+                        [x, y - 1], [x, y + 1]  // top, bottom
+                    ];
+
+                    adjacentCoords.forEach(([adjX, adjY]) => {
+                        if (adjX >= 0 && adjY >= 0 && adjX < gridSize && adjY < gridSize) {
+                            const adjCellType = cellTypes[adjX][adjY];
+                            if (adjCellType === 'block' || adjCellType === 'slab' || adjCellType === 'stairs') {
+                                console.log(`Adjacent block detected at (${adjX}, ${adjY}) with type: ${adjCellType}`);
+                                adjacentBlocksCount++;
+                            }
+                        }
+                    });
+
+                    // Convert to block if there are 3 or more orthogonally adjacent blocks (including slabs or stairs)
+                    if (adjacentBlocksCount >= 3) {
+                        cellTypes[x][y] = 'block';
+                        console.log(`Converting cell (${x}, ${y}) from stairs to full block due to ${adjacentBlocksCount} adjacent blocks.`);
+                        ctx.drawImage(full, x * cellSize, y * cellSize, cellSize, cellSize);
+                    } else {
+                        console.log(`Cell (${x}, ${y}) remains as stairs with ${adjacentBlocksCount} adjacent blocks.`);
+                    }
+                }
+            }
+        }
+
     }
+
 
 
     // Calculate the coverage percentage of a cell by the shaded area
