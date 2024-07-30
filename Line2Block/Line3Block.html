@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid with Draggable Points</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #grid {
+            position: relative;
+            width: 1000px; /* 50 * 20px grid cells */
+            height: 1000px; /* 50 * 20px grid cells */
+        }
+
+        .draggable {
+            width: 18px;
+            height: 18px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .draggable:active {
+            cursor: grabbing;
+        }
+
+        #coordinate-display {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="grid">
+        <canvas id="grid-canvas"></canvas>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
