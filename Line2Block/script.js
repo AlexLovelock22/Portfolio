@@ -165,7 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
         markAndLogIntersectedCells(p1X, p1Y, p2X, p2Y, dx, dy);
     }
 
-    // Mark cells intersected by lines and log coverage
+    const full = document.getElementById('full');
+    const bottomSlab = document.getElementById('bottomSlab');
+    const topSlab = document.getElementById('topSlab');
+    const stairs1 = document.getElementById('stairs1');
+    const stairs3 = document.getElementById('stairs2');
+    const stairs2 = document.getElementById('stairs3'); // Good
+    const stairs4 = document.getElementById('stairs4'); // Good 
+
     function markAndLogIntersectedCells(p1X, p1Y, p2X, p2Y, dx, dy) {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
         drawGrid(); // Redraw the grid
@@ -217,22 +224,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
                 const gradient = Math.abs(p2Y - p1Y) / Math.abs(p2X - p1X);
     
-                // Set fill color based on position relative to the line
+                let imageToDraw = null;
+    
+                // Set fill color and image based on position relative to the line
                 if (coveragePercentage > 0) {
                     if (gradient <= 0.9 && coveragePercentage <= 20) {
-                        // Darker orange above, lighter below
-                        ctx.fillStyle = isAboveCentralLine ? 'rgba(255, 10, 0, 1)' : 'rgba(255, 165, 0, 1)';
-                    } else if (gradient > 0.9 && coveragePercentage <= 10) {
-                        // Determine the quadrant based on both above/below and left/right
+                        // Choose images for slabs
+                        imageToDraw = isAboveCentralLine ? bottomSlab : topSlab;
+                        ctx.fillStyle = isAboveCentralLine ? 'rgba(255, 10, 0, 0)' : 'rgba(255, 165, 0, 0)';
+                    } else if (gradient > 0.5 && coveragePercentage <= 20) {
+                        // Choose images for stairs based on quadrants
                         if (isAboveCentralLine) {
-                            ctx.fillStyle = isLeftOfLine ? 'rgba(211, 211, 211, 1)' : 'rgba(105, 105, 105, 1)'; // Light grey for above, left or right
+                            imageToDraw = isLeftOfLine ? stairs1 : stairs2;
+                            ctx.fillStyle = isLeftOfLine ? 'rgba(211, 211, 211, 0)' : 'rgba(105, 105, 105, 0)';
                         } else {
-                            ctx.fillStyle = isLeftOfLine ? 'rgba(238, 130, 238, 1)' : 'rgba(148, 0, 211, 1)'; // Purple shades for below, left or right
+                            imageToDraw = isLeftOfLine ? stairs3 : stairs4;
+                            ctx.fillStyle = isLeftOfLine ? 'rgba(238, 130, 238, 0)' : 'rgba(148, 0, 211, 0)';
                         }
                     } else {
-                        ctx.fillStyle = 'rgba(0, 255, 0, 1)'; // Light green shade for other coverage
+                        imageToDraw = full
+                        ctx.fillStyle = 'rgba(0, 255, 0, 0)'; // Light green shade for other coverage
                     }
-                    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    
+                    // Draw the chosen image
+                    if (imageToDraw) {
+                        ctx.drawImage(imageToDraw, x * cellSize, y * cellSize, cellSize, cellSize);
+                    }
+                    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize); // Debugging color overlay
                 }
     
                 // Log the grid coordinates, coverage percentage, and position relative to the line
@@ -240,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    
+
 
     // Calculate the coverage percentage of a cell by the shaded area
     function calculateCoveragePercentage(cellVertices, shadedVertices) {
