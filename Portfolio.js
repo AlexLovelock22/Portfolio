@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const targetId = item.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
-            const offset = window.innerHeight * 0.2; // 20% of the viewport height
+            const offset = window.innerHeight * 0.4; // 20% of the viewport height
 
             window.scrollTo({
                 top: targetElement.offsetTop - offset,

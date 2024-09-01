@@ -137,14 +137,7 @@ aside {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.skillsTechnologiesContainer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; 
-    justify-content: center; 
-    margin: 0 auto;
-    width: fit-content; 
-}
+
 
 .tech-image {
     background-color: rgba(23, 38, 71, 0.4); 
@@ -162,7 +155,7 @@ aside {
 
 .skillsTechnologiesContainer {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 1.5rem;
     justify-content: center;
     margin: 0 auto;
@@ -249,5 +242,17 @@ aside {
 .carousel-button.next {
     right: 10px;
 }
+
+.certificate-display{
+    margin-bottom:1vh;
+}
+
+@media (max-width: 1024px) {
+    body {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+
 
 
