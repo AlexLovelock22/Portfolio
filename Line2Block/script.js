@@ -3,10 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cellSize = 20; // Size of each cell in pixels
     const cellArea = cellSize * cellSize; // Area of a single cell
 
-    let lastPositions = {
-        point1: { x: 10, y: 10 },
-        point2: { x: 40, y: 40 }
-    };
+
 
     // Create grid container
     const gridContainer = document.createElement('div');
@@ -61,10 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    let lastPositions = {
+        point1: { x: 10, y: 10 },
+        point2: { x: 40, y: 40 },
+        ControlPoint: { x: 25, y: 25 }
+    };
+
     // Create draggable points
     const points = [
         createDraggablePoint('point1', 10, 10, 'red'),
-        createDraggablePoint('point2', 40, 40, 'blue')
+        createDraggablePoint('point2', 40, 40, 'blue'),
+        createDraggablePoint('ControlPoint', 25, 25, 'green')
     ];
 
     function createDraggablePoint(id, initialX, initialY, color) {
@@ -121,49 +125,27 @@ document.addEventListener('DOMContentLoaded', () => {
         return point;
     }
 
-    // Draw lines and shade between them, and mark intersected cells
     function drawLines() {
-        drawGrid(); // Redraw grid to clear previous lines
-        ctx.strokeStyle = 'blue';
-        ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; // Light blue shade
+    // Coordinates for points
+    const p1X = parseInt(points[0].style.left) + 9;
+    const p1Y = parseInt(points[0].style.top) + 9;
+    const p2X = parseInt(points[1].style.left) + 9;
+    const p2Y = parseInt(points[1].style.top) + 9;
+    const controlX = parseInt(points[2].style.left) + 9;
+    const controlY = parseInt(points[2].style.top) + 9;
 
-        // Coordinates for points
-        const p1X = parseInt(points[0].style.left) + 9;
-        const p1Y = parseInt(points[0].style.top) + 9;
-        const p2X = parseInt(points[1].style.left) + 9;
-        const p2Y = parseInt(points[1].style.top) + 9;
+    // Set line width for thickness
+    const lineWidth = 10; // Set the line width to desired thickness
+ 
 
-        // Calculate angle between points
-        const angle = Math.atan2(p2Y - p1Y, p2X - p1X);
+    
 
-        // Calculate offset positions for lines
-        const offset = 10; // Adjust this value as needed for line thickness
-        const dx = offset * Math.sin(angle);
-        const dy = offset * Math.cos(angle);
+    // Mark cells touched by the lines and log coverage
+    markAndLogIntersectedCells(p1X, p1Y, p2X, p2Y, controlX, controlY, lineWidth);
 
-        // Draw shaded area
-        ctx.beginPath();
-        ctx.moveTo(p1X - dx, p1Y + dy);
-        ctx.lineTo(p2X - dx, p2Y + dy);
-        ctx.lineTo(p2X + dx, p2Y - dy);
-        ctx.lineTo(p1X + dx, p1Y - dy);
-        ctx.closePath();
-        ctx.fill();
-
-        // Draw lines with calculated offsets
-        ctx.beginPath();
-        ctx.moveTo(p1X - dx, p1Y + dy); // Top line from point1
-        ctx.lineTo(p2X - dx, p2Y + dy); // Top line to point2
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(p1X + dx, p1Y - dy); // Bottom line from point1
-        ctx.lineTo(p2X + dx, p2Y - dy); // Bottom line to point2
-        ctx.stroke();
-
-        // Mark cells touched by the lines and log coverage
-        markAndLogIntersectedCells(p1X, p1Y, p2X, p2Y, dx, dy);
-    }
+    // Reset the lineWidth if needed for other drawings
+    ctx.lineWidth = 1; // Reset to default or another value if necessary
+}
 
     const full = document.getElementById('full');
     const bottomSlab = document.getElementById('bottomSlab');
@@ -173,106 +155,183 @@ document.addEventListener('DOMContentLoaded', () => {
     const stairs2 = document.getElementById('stairs3'); // Good
     const stairs4 = document.getElementById('stairs4'); // Good 
 
-    function markAndLogIntersectedCells(p1X, p1Y, p2X, p2Y, dx, dy) {
+    // Calculate the Bézier curve points
+    function getBezierCurvePoints(p0, p1, p2, numPoints) {
+        const points = [];
+        for (let i = 0; i <= numPoints; i++) {
+            let t = i / numPoints;
+            let x = (1 - t) * (1 - t) * p0.x + 2 * (1 - t) * t * p1.x + t * t * p2.x;
+            let y = (1 - t) * (1 - t) * p0.y + 2 * (1 - t) * t * p1.y + t * t * p2.y;
+            points.push({ x: x, y: y });
+        }
+        return points;
+    }
+
+
+
+    // Function to determine if a point is above the Bézier curve
+    // Check if a point is above the curve
+    function isPointAboveCurve(x, y, curvePoints) {
+        for (let i = 0; i < curvePoints.length - 1; i++) {
+            const cp1 = curvePoints[i];
+            const cp2 = curvePoints[i + 1];
+            if ((x > cp1.x && x <= cp2.x) || (x > cp2.x && x <= cp1.x)) {
+                const slope = (cp2.y - cp1.y) / (cp2.x - cp1.x);
+                const yOnLine = cp1.y + slope * (x - cp1.x);
+                return y < yOnLine;
+            }
+        }
+        return false;
+    }
+
+    function drawReferenceCurve(p1X, p1Y, controlX, controlY, p2X, p2Y) {
+        ctx.beginPath();
+        ctx.moveTo(p1X, p1Y);
+        ctx.quadraticCurveTo(controlX, controlY, p2X, p2Y);
+        ctx.strokeStyle = 'rgba(0, 255, 0, 0.6)'; // Example color for reference curve
+        ctx.lineWidth = 1; // Use a thin line for reference
+        ctx.stroke();
+    }
+    
+
+    function markAndLogIntersectedCells(p1X, p1Y, p2X, p2Y, controlX, controlY, dx, dy) {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
         drawGrid(); // Redraw the grid
-
+    
         console.clear(); // Clear previous logs
-
+        console.log("Incoming data: ", p1X, p1Y, p2X, p2Y, controlX, controlY, dx, dy);
+    
         // Bounding box of the shaded area
-        const minX = Math.min(p1X - dx, p2X - dx, p1X + dx, p2X + dx);
-        const maxX = Math.max(p1X - dx, p2X - dx, p1X + dx, p2X + dx);
-        const minY = Math.min(p1Y + dy, p2Y + dy, p1Y - dy, p2Y - dy);
-        const maxY = Math.max(p1Y + dy, p2Y + dy, p1Y - dy, p2Y - dy);
-
+        const minX = Math.min(p1X - dx, p2X - dx, controlX - dx, p1X + dx, p2X + dx, controlX + dx);
+        const maxX = Math.max(p1X - dx, p2X - dx, controlX - dx, p1X + dx, p2X + dx, controlX + dx);
+        const minY = Math.min(p1Y + dy, p2Y + dy, controlY + dy, p1Y - dy, p2Y - dy, controlY - dy);
+        const maxY = Math.max(p1Y + dy, p2Y + dy, controlY + dy, p1Y - dy, p2Y - dy, controlY - dy);
+    
+        console.log(`Bounding box: minX = ${minX}, maxX = ${maxX}, minY = ${minY}, maxY = ${maxY}`);
+    
+        // Create array to store cell types
         const cellTypes = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+    
+        drawReferenceCurve();
+    
+        // Get Bézier curve points for the center curve
+        const numCurvePoints = 50; // Number of points to approximate the curve
+        const centerCurvePoints = getBezierCurvePoints(
+            { x: p1X, y: p1Y },
+            { x: controlX, y: controlY },
+            { x: p2X, y: p2Y },
+            numCurvePoints
+        );
 
-        // Initial pass to determine cell types
+        console.log("Generated Grid coordinates for blocks:", centerCurvePoints);
+
+    
+        // Calculate top and bottom curves using consistent normal vectors
+        const topCurvePoints = [];
+        const bottomCurvePoints = [];
+        for (let i = 0; i < centerCurvePoints.length - 1; i++) {
+            const point1 = centerCurvePoints[i];
+            const point2 = centerCurvePoints[i + 1];
+            const tangent = { x: point2.x - point1.x, y: point2.y - point1.y };
+            const length = Math.hypot(tangent.x, tangent.y);
+            const normal = { x: -tangent.y / length, y: tangent.x / length };
+    
+            // Apply a consistent offset for thickness
+            const offset = dx; // Use dx as the desired thickness in pixels
+            topCurvePoints.push({ x: point1.x + offset * normal.x, y: point1.y + offset * normal.y });
+            bottomCurvePoints.push({ x: point1.x - offset * normal.x, y: point1.y - offset * normal.y });
+        }
+    
+        // Combine top and bottom curve points for checking
+        const allCurvePoints = topCurvePoints.concat(bottomCurvePoints);
+    
         for (let x = 0; x < gridSize; x++) {
             for (let y = 0; y < gridSize; y++) {
-                // Define the corners of the current cell
                 const cellTopLeft = { x: x * cellSize, y: y * cellSize };
                 const cellTopRight = { x: (x + 1) * cellSize, y: y * cellSize };
                 const cellBottomLeft = { x: x * cellSize, y: (y + 1) * cellSize };
                 const cellBottomRight = { x: (x + 1) * cellSize, y: (y + 1) * cellSize };
                 const cellCenter = { x: (cellTopLeft.x + cellBottomRight.x) / 2, y: (cellTopLeft.y + cellBottomRight.y) / 2 };
-
-                // Check if the cell is within the bounding box of the shaded area
+    
                 if (cellTopLeft.x > maxX || cellBottomRight.x < minX || cellTopLeft.y > maxY || cellBottomRight.y < minY) {
                     continue; // Skip cells outside the bounding box
                 }
-
-                // Calculate the y-value of the line at the cell's x-coordinate
-                const lineY = p1Y + ((cellCenter.x - p1X) * (p2Y - p1Y)) / (p2X - p1X);
-                const isAboveCentralLine = cellCenter.y < lineY;
-
-                // Calculate the x-value of the line at the cell's y-coordinate
-                const lineX = p1X + ((cellCenter.y - p1Y) * (p2X - p1X)) / (p2Y - p1Y);
-                const isLeftOfLine = cellCenter.x < lineX;
-
-                // Calculate coverage percentage and gradient
+    
+                // Calculate coverage percentage using Bézier curve points
                 const coveragePercentage = calculateCoveragePercentage(
                     [cellTopLeft, cellTopRight, cellBottomRight, cellBottomLeft],
-                    [{ x: p1X - dx, y: p1Y + dy }, { x: p2X - dx, y: p2Y + dy }, { x: p2X + dx, y: p2Y - dy }, { x: p1X + dx, y: p1Y - dy }]
+                    allCurvePoints
                 );
-                const gradient = Math.abs(p2Y - p1Y) / Math.abs(p2X - p1X);
-
-                let imageToDraw = null;
-                let cellType = 'other';
-
-                // Set fill color and image based on position relative to the line
+    
+                console.log(`Cell (${x}, ${y}) coveragePercentage: ${coveragePercentage}`);
+    
+                // Calculate the local gradient using the nearest points on the top and bottom curves
+                let localGradient = 0;
+                if (topCurvePoints.length > 1) {
+                    const closestTopPoint = getClosestPointOnCurve(cellCenter, topCurvePoints);
+                    const closestBottomPoint = getClosestPointOnCurve(cellCenter, bottomCurvePoints);
+                    if (closestTopPoint && closestBottomPoint) {
+                        localGradient = Math.abs((closestTopPoint.y - closestBottomPoint.y) / (closestTopPoint.x - closestBottomPoint.x));
+                    }
+                }
+    
+                // Check if the cell center is above or below the curve using the combined points
+                const isAboveCentralLine = isPointAboveCurve(cellCenter.x, cellCenter.y, centerCurvePoints); // Corrected to use centerCurvePoints
+                
+                // Correct the isLeftOfLine calculation
+                const isLeftOfLine = isPointLeftOfCurve(cellCenter.x, cellCenter.y, centerCurvePoints);
+    
                 if (coveragePercentage > 0) {
-                    console.log(`Checking cell (${x}, ${y}): Coverage ${coveragePercentage.toFixed(2)}%, Gradient ${gradient.toFixed(2)}`);
-                    if (gradient <= 0.9 && coveragePercentage <= 20) {
-                        // Choose images for slabs
-                        imageToDraw = isAboveCentralLine ? bottomSlab : topSlab;
-                        cellType = 'slab';
-                        console.log(`Checking cell (${x}, ${y}): Placing Slab.`);
-                    } else if (gradient > 0.4 && gradient >= 0.5 && coveragePercentage <= 20) {
-                        // Choose images for stairs based on quadrants
-                        if (isAboveCentralLine) {
-                            imageToDraw = isLeftOfLine ? stairs1 : stairs2;
+                    let imageToDraw = null;
+                    let cellType = 'other';
+    
+                    // Determine the appropriate image based on local gradient, coverage, and position
+                    if (coveragePercentage > 0 ) {
+                        if (localGradient <= 20 && coveragePercentage <= 20 && localGradient > 1) {
+                            // Horizontal or nearly horizontal
+                            imageToDraw = isAboveCentralLine ? bottomSlab : topSlab;
+                            cellType = 'slab';
+                        } else if (localGradient < 30) {
+                            // Vertical or nearly vertical
+                            if (isAboveCentralLine) {
+                                imageToDraw = isLeftOfLine ? stairs1 : stairs2;
+                            } else {
+                                imageToDraw = isLeftOfLine ? stairs3 : stairs4;
+                            }
                             cellType = 'stairs';
-                            console.log(`Checking cell (${x}, ${y}): Placing Stairs (Upper quadrant).`);
                         } else {
-                            imageToDraw = isLeftOfLine ? stairs3 : stairs4;
-                            cellType = 'stairs';
-                            console.log(`Checking cell (${x}, ${y}): Placing Stairs (Lower quadrant).`);
+                            imageToDraw = full;
+                            cellType = 'block';
                         }
                     } else {
                         imageToDraw = full;
                         cellType = 'block';
-                        console.log(`Checking cell (${x}, ${y}): Placing Full Block.`);
                     }
-
-                    // Store the cell type for conversion check later
+    
                     cellTypes[x][y] = cellType;
-
-                    // Draw the chosen image
+    
                     if (imageToDraw) {
-                        ctx.drawImage(imageToDraw, x * cellSize, y * cellSize, cellSize, cellSize);
+                        ctx.drawImage(imageToDraw, cellTopLeft.x, cellTopLeft.y, cellSize, cellSize);
                         console.log(`Drawing image at (${x}, ${y})`);
                     }
+    
+                    console.log(`Affected Cell: (${x}, ${y}) Coverage %: ${coveragePercentage.toFixed(2)}, Local Gradient: ${localGradient.toFixed(2)}, Above Central Line: ${isAboveCentralLine}, Left of Line: ${isLeftOfLine}`);
                 }
-
-                // Log the grid coordinates, coverage percentage, and position relative to the line
-                console.log(`Affected Cell: (${x}, ${y}) Coverage %: ${coveragePercentage.toFixed(2)}, Gradient: ${gradient.toFixed(2)}, Above Central Line: ${isAboveCentralLine}, Left of Line: ${isLeftOfLine}`);
             }
         }
-
+    
         // Second pass to check and convert stairs to blocks if necessary
         for (let x = 0; x < gridSize; x++) {
             for (let y = 0; y < gridSize; y++) {
                 if (cellTypes[x][y] === 'stairs') {
                     console.log(`Checking adjacent cells for cell (${x}, ${y}) to determine if conversion to block is needed.`);
                     let adjacentBlocksCount = 0;
-
-                    // Check orthogonally adjacent cells only
+    
                     const adjacentCoords = [
                         [x - 1, y], [x + 1, y], // left, right
                         [x, y - 1], [x, y + 1]  // top, bottom
                     ];
-
+    
                     adjacentCoords.forEach(([adjX, adjY]) => {
                         if (adjX >= 0 && adjY >= 0 && adjX < gridSize && adjY < gridSize) {
                             const adjCellType = cellTypes[adjX][adjY];
@@ -282,8 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }
                     });
-
-                    // Convert to block if there are 3 or more orthogonally adjacent blocks (including slabs or stairs)
+    
                     if (adjacentBlocksCount >= 3) {
                         cellTypes[x][y] = 'block';
                         console.log(`Converting cell (${x}, ${y}) from stairs to full block due to ${adjacentBlocksCount} adjacent blocks.`);
@@ -294,8 +352,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-
     }
+    
+    // Function to check if a point is left of the Bézier curve
+    function isPointLeftOfCurve(x, y, curvePoints) {
+        for (let i = 0; i < curvePoints.length - 1; i++) {
+            const cp1 = curvePoints[i];
+            const cp2 = curvePoints[i + 1];
+            if ((y > cp1.y && y <= cp2.y) || (y > cp2.y && y <= cp1.y)) {
+                const slope = (cp2.x - cp1.x) / (cp2.y - cp1.y);
+                const xOnLine = cp1.x + slope * (y - cp1.y);
+                return x < xOnLine;
+            }
+        }
+        return false;
+    }
+
+    // Function to find the closest point on the curve to a given point
+    function getClosestPointOnCurve(point, curvePoints) {
+        let closestPoint = null;
+        let minDistance = Infinity;
+        for (const curvePoint of curvePoints) {
+            const distance = Math.hypot(point.x - curvePoint.x, point.y - curvePoint.y);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestPoint = curvePoint;
+            }
+        }
+        return closestPoint;
+    }
+
+
+
 
 
 
@@ -400,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.abs(area) / 2;
     }
 
-    const throttledDrawLines = throttle(drawLines, 10); // Adjust the limit as needed
+    const throttledDrawLines = throttle(drawLines, 1); // Adjust the limit as needed
 
     function throttle(func, limit) {
         let lastFunc;
